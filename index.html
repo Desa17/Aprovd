@@ -216,36 +216,33 @@
   overflow: hidden;
   background: linear-gradient(90deg, #FF002F, #cc0026);
   color: #fff;
-  z-index: 1000;
   padding: 6px 0;
+  z-index: 1000;
 }
 
-/* Pista que se mueve */
 .franja-track {
-  display: flex;
-  width: max-content;
-  animation: scrollContinuo 12s linear infinite;
+  display: inline-block;
+  white-space: nowrap;
+  animation: scrollInfinito 10s linear infinite;
 }
 
-/* Texto */
-.franja-texto {
-  white-space: nowrap;
-  padding-right: 80px; /* espacio entre repeticiones */
+.franja-track span {
+  display: inline-block;
+  padding-right: 60px;
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 1px;
 }
 
-/* Movimiento exacto */
-@keyframes scrollContinuo {
-  from {
+/* 🔥 CLAVE REAL */
+@keyframes scrollInfinito {
+  0% {
     transform: translateX(0);
   }
-  to {
+  100% {
     transform: translateX(-50%);
   }
 }
-
     
   </style>
 </head>
@@ -254,8 +251,8 @@
   <!-- FRANJA SUPERIOR -->
 <div class="franja-envio">
   <div class="franja-track">
-    <div class="franja-texto">🚚 Envíos a nivel nacional 📦</div>
-    <div class="franja-texto">🚚 Envíos a nivel nacional 📦</div>
+    <span>🚚 Envíos a nivel nacional 📦 &nbsp;&nbsp;&nbsp;</span>
+    <span>🚚 Envíos a nivel nacional 📦 &nbsp;&nbsp;&nbsp;</span>
   </div>
 </div>
   <!-- FRANJA SUPERIOR -->
