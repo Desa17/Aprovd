@@ -221,25 +221,24 @@
 }
 
 .franja-track {
-  display: inline-block;
-  white-space: nowrap;
-  animation: scrollInfinito 10s linear infinite;
+  display: flex;
+  width: max-content;
+  animation: scrollInfinito 15s linear infinite;
 }
 
 .franja-track span {
-  display: inline-block;
-  padding-right: 60px;
+  padding-right: 80px;
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 1px;
+  white-space: nowrap;
 }
 
-/* 🔥 CLAVE REAL */
 @keyframes scrollInfinito {
-  0% {
+  from {
     transform: translateX(0);
   }
-  100% {
+  to {
     transform: translateX(-50%);
   }
 }
@@ -251,8 +250,10 @@
   <!-- FRANJA SUPERIOR -->
 <div class="franja-envio">
   <div class="franja-track">
-    <span>🚚 Envíos a nivel nacional 📦 &nbsp;&nbsp;&nbsp;</span>
-    <span>🚚 Envíos a nivel nacional 📦 &nbsp;&nbsp;&nbsp;</span>
+    <span>🚚 Envíos a nivel nacional 📦</span>
+    <span>🚚 Envíos a nivel nacional 📦</span>
+    <span>🚚 Envíos a nivel nacional 📦</span>
+    <span>🚚 Envíos a nivel nacional 📦</span>
   </div>
 </div>
   <!-- FRANJA SUPERIOR -->
