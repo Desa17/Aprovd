@@ -206,10 +206,45 @@
       cursor: zoom-out;
       transition: transform 0.3s;
     }
+
+
+
+
+
+/* ================== FRANJA SUPERIOR ================== */
+.franja-envio {
+  width: 100%;
+  background: linear-gradient(90deg, #FF002F, #cc0026);
+  color: #fff;
+  text-align: center;
+  padding: 8px 10px;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  animation: deslizar 15s linear infinite;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* Animación tipo movimiento */
+@keyframes deslizar {
+  0% { text-indent: 100%; }
+  100% { text-indent: -100%; }
+      }
+    
   </style>
 </head>
 <body>
 
+  <!-- FRANJA SUPERIOR -->
+  <div class="franja-envio">
+    🚚 Envíos a nivel nacional 🇵🇪 | Pago contra entrega disponible
+  </div>
+  <!-- FRANJA SUPERIOR -->
+  
   <h1 id="titulo-happy">
   <span>H</span><span>a</span><span>p</span><span>p</span><span>y</span>
   <span> </span>
