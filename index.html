@@ -1,243 +1,373 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Store</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#FF002F">
+  <link rel="manifest" href="/manifest.json">
+  <title>Tienda de Juguetes</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
-<style>
+  <style>
+    /* ================== BODY ================== */
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+      color: #333;
+    }
 
-/* ===== RESET ===== */
-*{margin:0;padding:0;box-sizing:border-box;}
+    /* ================== AQUI EMPIEZA EL TITULO ================== */
 
-body{
-  font-family:'Roboto',sans-serif;
-  background:linear-gradient(180deg,#ffffff 0%,#fff5f7 100%);
-  color:#333;
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+
+#titulo-happy {
+  font-family: 'Fredoka One', cursive; /* divertida y clara */
+  font-size: 2.2rem; /* tamaño mediano */
+  text-align: center;
+  margin-bottom: 30px;
 }
 
-/* HEADER */
-header{
-  background:white;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:15px 30px;
-  box-shadow:0 5px 20px rgba(0,0,0,0.05);
-  position:sticky;
-  top:0;
-  z-index:100;
+/* Cada letra es un span para aplicar estilo individual */
+#titulo-happy span {
+  display: inline-block;
+  font-weight: bold;
+  transition: transform 0.3s, color 0.3s;
 }
 
-.logo{
-  font-size:24px;
-  font-weight:700;
-  color:#FF002F;
+/* Letras con colores y ligeras rotaciones */
+#titulo-happy span:nth-child(1) { color: #FF002F; transform: rotate(-5deg); }
+#titulo-happy span:nth-child(2) { color: #FF7F50; transform: rotate(3deg); }
+#titulo-happy span:nth-child(3) { color: #FFA500; transform: rotate(-2deg); }
+#titulo-happy span:nth-child(4) { color: #00BFFF; transform: rotate(4deg); }
+#titulo-happy span:nth-child(5) { color: #32CD32; transform: rotate(-3deg); }
+#titulo-happy span:nth-child(6) { color: #FF69B4; transform: rotate(2deg); } /* espacio para separar palabras */
+#titulo-happy span:nth-child(7) { color: #FF002F; transform: rotate(-4deg); }
+#titulo-happy span:nth-child(8) { color: #FF8C00; transform: rotate(3deg); }
+#titulo-happy span:nth-child(9) { color: #1E90FF; transform: rotate(-2deg); }
+#titulo-happy span:nth-child(10){ color: #32CD32; transform: rotate(2deg); }
+#titulo-happy span:nth-child(11){ color: #FF1493; transform: rotate(-3deg); }
+
+/* Efecto hover para divertido movimiento */
+#titulo-happy span:hover {
+  transform: scale(1.3) rotate(0deg);
+  cursor: default;
 }
 
-.search-box input{
-  padding:10px 15px;
-  border-radius:30px;
-  border:1px solid #eee;
-  width:250px;
-  transition:0.3s;
+
+/* ================== AQUI EMPIEZA TITULOS PARA CELULAR ================== */
+#titulo-happy {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.2rem;
+  text-align: center;
+  margin-bottom: 30px;
+  line-height: 1.2;
+  word-break: break-word; /* evita que las letras se salgan */
 }
 
-.search-box input:focus{
-  outline:none;
-  border:1px solid #FF002F;
-}
-
-/* HERO */
-.hero{
-  height:280px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  background:linear-gradient(135deg,#FF002F,#ff5b77);
-  color:white;
-  border-radius:0 0 40px 40px;
-  margin-bottom:40px;
-}
-
-.hero h2{font-size:32px;font-weight:700;}
-
-/* GRID */
-.productos-container{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:30px;
-  padding:40px;
-}
-
-/* CARD */
-.producto{
-  background:white;
-  border-radius:20px;
-  padding:20px;
-  box-shadow:0 10px 30px rgba(255,0,47,0.08);
-  transition:0.4s;
-  position:relative;
-}
-
-.producto:hover{
-  transform:translateY(-10px);
-  box-shadow:0 15px 40px rgba(255,0,47,0.2);
-}
-
-/* BADGE */
-.badge{
-  position:absolute;
-  top:15px;
-  right:15px;
-  padding:5px 12px;
-  border-radius:20px;
-  font-size:12px;
-  font-weight:bold;
-  color:white;
-}
-
-.disponible{background:#2ecc71;}
-.reservado{background:#f39c12;}
-.vendido{background:#e74c3c;}
-
-.producto img{
-  width:100%;
-  border-radius:15px;
-  cursor:pointer;
-}
-
-.producto h3{margin:15px 0 10px;}
-
-.price{
-  font-size:20px;
-  font-weight:bold;
-  color:#FF002F;
-  margin:10px 0;
-}
-
-button{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:30px;
-  background:linear-gradient(135deg,#FF002F,#cc0026);
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-#zoomModal{
-  display:none;
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.7);
-  justify-content:center;
-  align-items:center;
-}
-
-#zoomModal img{
-  max-width:90%;
-  max-height:90%;
-  border-radius:20px;
-}
-
-.loader{
-  text-align:center;
-  font-size:20px;
-  padding:40px;
-}
-
-</style>
-</head>
-<body>
-
-<header>
-  <div class="logo">Happy Store</div>
-  <div class="search-box">
-    <input type="text" id="buscador" placeholder="Buscar juguetes...">
-  </div>
-</header>
-
-<section class="hero">
-  <h2>Descubre juguetes increíbles para todas las edades 🎁</h2>
-</section>
-
-<div id="loader" class="loader">Cargando productos...</div>
-<div class="productos-container" id="productos"></div>
-
-<div id="zoomModal" onclick="cerrarModal()">
-  <img id="zoomImg">
-</div>
-
-<script>
-
-const API_URL = "https://script.google.com/macros/s/AKfycbz5jmczBym2G_VaClZiNriAqYTpF-6qDSnRzWhRaSNHtGlDHECy03PhJT0polNG00endw/exec";
-
-let productosGlobal = [];
-
-async function cargarProductos(){
-  try{
-    const response = await fetch(API_URL);
-    const data = await response.json();
-    productosGlobal = data;
-    mostrarProductos(data);
-    document.getElementById("loader").style.display = "none";
-  }catch(error){
-    document.getElementById("loader").innerText = "Error al cargar productos";
-    console.error(error);
+/* Ajustes responsivos */
+@media (max-width: 480px) {
+  #titulo-happy {
+    font-size: 1.6rem; /* más pequeño en móviles */
   }
 }
 
-function mostrarProductos(lista){
-  const contenedor = document.getElementById("productos");
-  contenedor.innerHTML = "";
+@media (min-width: 481px) and (max-width: 768px) {
+  #titulo-happy {
+    font-size: 2rem; /* tablet */
+  }
+}
+    #titulo-happy span {
+  display: inline-block;
+  font-weight: bold;
+  transition: transform 0.3s, color 0.3s;
+  font-size: inherit; /* hereda tamaño según pantalla */
+}
 
-  lista.forEach(producto=>{
-    const estadoClase = producto.estado.toLowerCase();
 
-    contenedor.innerHTML += `
-      <div class="producto">
-        <div class="badge ${estadoClase}">${producto.estado}</div>
-        <img src="${producto.imagen}" onclick="zoomImagen('${producto.imagen}')">
-        <h3>${producto.nombre}</h3>
-        <p class="price">S/ ${producto.precio}</p>
-        <button onclick="comprar('${producto.nombre}')">Comprar</button>
-      </div>
-    `;
+    /* ================== PRODUCTOS ================== */
+    .productos-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .producto {
+      width: 300px;
+      background: #fff;
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 6px 15px rgba(255,0,47,0.15); /* sombra sutil en color principal */
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .producto:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(255,0,47,0.25);
+    }
+
+    /* ================== SLIDER ================== */
+    .slider {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1/1;
+      overflow: hidden;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      cursor: grab;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    .slider img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+      transition: transform 0.3s;
+      border-radius: 12px;
+    }
+
+    .slider img.active {
+      display: block;
+    }
+
+    .slider-dots {
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    .slider-dots span {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      background-color: #ddd;
+      border-radius: 50%;
+      margin: 0 4px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .slider-dots span.active {
+      background-color: #FF002F; /* color principal */
+    }
+
+    /* ================== ESTRELLAS ================== */
+    .estrellas {
+      font-size: 18px;
+      color: #FF002F; /* dorado reemplazado por rojo principal */
+      margin-bottom: 8px;
+    }
+
+    /* ================== BOTÓN ================== */
+    button {
+      padding: 12px;
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #FF002F, #cc0026);
+      color: #fff;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 8px rgba(255,0,47,0.2);
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(255,0,47,0.3);
+    }
+
+    @media (max-width:768px) {
+      .producto { width: 90%; }
+    }
+
+    /* ================== MODAL ZOOM ================== */
+    #zoomModal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.85);
+      justify-content: center;
+      align-items: center;
+    }
+
+    #zoomModal img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 12px;
+      cursor: zoom-out;
+      transition: transform 0.3s;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 id="titulo-happy">
+  <span>H</span><span>a</span><span>p</span><span>p</span><span>y</span>
+  <span> </span>
+  <span>S</span><span>t</span><span>o</span><span>r</span><span>e</span>
+</h1>
+
+  <div id="productos" class="productos-container"></div>
+
+  <div id="zoomModal"><img id="zoomImg"></div>
+
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbz5jmczBym2G_VaClZiNriAqYTpF-6qDSnRzWhRaSNHtGlDHECy03PhJT0polNG00endw/exec";
+    let listaProductos = [];
+
+    async function cargarProductos() {
+      const respuesta = await fetch(API_URL);
+      listaProductos = await respuesta.json();
+      listaProductos = listaProductos.slice(1).sort(() => Math.random() - 0.5);
+      mostrarProductosEnPantalla();
+    }
+
+    function generarEstrellas(valorEstado) {
+      const valor = valorEstado / 2; // convertir 0-10 a 0-5 estrellas
+      let html = '';
+      for(let i=0;i<5;i++){
+        if(i < Math.floor(valor)) html += '★';
+        else if(i < valor) html += '⯨';
+        else html += '☆';
+      }
+      return `<span class="estrellas">${html}</span>`;
+    }
+
+    function mostrarProductosEnPantalla() {
+      const contenedor = document.getElementById('productos');
+      contenedor.innerHTML = listaProductos.map((producto,index)=>{
+        const imagenes = [producto[7],producto[8],producto[9],producto[10],producto[11]].filter(url=>url && url.trim()!=="");
+        const sliderId = `slider-${index}`;
+        const dotsId = `dots-${index}`;
+        const estrellas = generarEstrellas(producto[6]);
+
+        return `
+          <div class="producto">
+            <div class="slider" id="${sliderId}">
+              ${imagenes.map((img,i)=>`<img src="${img}" class="${i===0?'active':''}" alt="${producto[2]}">`).join('')}
+            </div>
+            <div class="slider-dots" id="${dotsId}">
+              ${imagenes.map((_,i)=>`<span class="${i===0?'active':''}"></span>`).join('')}
+            </div>
+            <p><strong>Código:</strong> ${producto[1]}</p>
+            <p><strong>Estado:</strong> ${estrellas}</p>
+            <h3>${producto[2]}</h3>
+            <p>${producto[3]}</p>
+            <p><strong>Precio:</strong> S/${producto[4]}</p>
+            <button onclick="reservarProducto('${producto[2]}','${producto[1]}')">Comprar</button>
+          </div>
+        `;
+      }).join('');
+
+      listaProductos.forEach((_,i)=>inicializarSlider(i));
+    }
+
+  
+    async function reservarProducto(nombreProducto, codigoProducto) {
+  // Llamada opcional a tu API para registrar la reserva
+  const respuesta = await fetch(API_URL, {
+    method: "POST",
+    body: JSON.stringify({ action: "reservar", producto: nombreProducto })
   });
+
+  const data = await respuesta.json();
+
+  if(data.success){
+    // Mensaje que se enviará a WhatsApp
+    let mensaje = `Hola! Quiero comprar el producto: ${nombreProducto} (Código: ${codigoProducto})`;
+
+    // Codificar mensaje para URL
+    mensaje = encodeURIComponent(mensaje);
+
+    // Abrir WhatsApp en nueva pestaña
+    window.open(`https://wa.me/51970984529?text=${mensaje}`, '_blank');
+  } else {
+    alert(data.mensaje);
+  }
 }
 
-function comprar(nombre){
-  alert("Producto seleccionado: " + nombre);
-}
 
-document.getElementById("buscador").addEventListener("input", function(){
-  const texto = this.value.toLowerCase();
-  const filtrados = productosGlobal.filter(p =>
-    p.nombre.toLowerCase().includes(texto)
-  );
-  mostrarProductos(filtrados);
-});
+    function inicializarSlider(index) {
+      const slider = document.getElementById(`slider-${index}`);
+      const dots = document.getElementById(`dots-${index}`).children;
+      if(!slider) return;
+      const imgs = slider.querySelectorAll("img");
+      if(imgs.length<=1) return;
 
-function zoomImagen(src){
-  document.getElementById("zoomImg").src = src;
-  document.getElementById("zoomModal").style.display = "flex";
-}
+      let current = 0;
+      let intervalo = setInterval(nextSlide, 3000);
 
-function cerrarModal(){
-  document.getElementById("zoomModal").style.display = "none";
-}
+      function nextSlide() {
+        imgs[current].classList.remove("active");
+        dots[current].classList.remove("active");
+        current = (current + 1) % imgs.length;
+        imgs[current].classList.add("active");
+        dots[current].classList.add("active");
+      }
 
-cargarProductos();
+      imgs.forEach(img=>img.addEventListener('click', ()=>{
+        clearInterval(intervalo);
+        document.getElementById('zoomImg').src = img.src;
+        document.getElementById('zoomModal').style.display = 'flex';
+      }));
 
-</script>
+      document.getElementById('zoomModal').addEventListener('click', ()=>{
+        document.getElementById('zoomModal').style.display = 'none';
+        intervalo = setInterval(nextSlide, 3000);
+      });
+
+      Array.from(dots).forEach((dot,i)=>{
+        dot.addEventListener('click', ()=>{ cambiarSlide(i); });
+      });
+
+      let startX = 0;
+      slider.addEventListener('mousedown', e=>{ startX=e.clientX; clearInterval(intervalo); });
+      slider.addEventListener('mouseup', e=>{ manejarSwipe(e.clientX - startX); });
+      slider.addEventListener('touchstart', e=>{ startX=e.touches[0].clientX; clearInterval(intervalo); });
+      slider.addEventListener('touchend', e=>{ manejarSwipe(e.changedTouches[0].clientX - startX); });
+
+      function manejarSwipe(diff){
+        if(diff>50) current = (current-1+imgs.length)%imgs.length;
+        else if(diff<-50) current = (current+1)%imgs.length;
+        cambiarSlide(current);
+        intervalo = setInterval(nextSlide, 3000);
+      }
+
+      function cambiarSlide(nuevo){
+        imgs.forEach(img=>img.classList.remove("active"));
+        Array.from(dots).forEach(dot=>dot.classList.remove("active"));
+        current = nuevo;
+        imgs[current].classList.add("active");
+        dots[current].classList.add("active");
+      }
+    }
+
+    cargarProductos();
+
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.register('/sw.js').then(()=>console.log('Service Worker registrado'));
+    }
+  </script>
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+  
