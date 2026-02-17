@@ -208,29 +208,45 @@
     }
 
 
-
-
-
+    
 /* ================== FRANJA SUPERIOR ================== */
 .franja-envio {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
+  height: 40px;
   background: linear-gradient(90deg, #FF002F, #cc0026);
   color: #fff;
-  text-align: center;
-  padding: 8px 0;
+  overflow: hidden;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+}
+
+/* TEXTO QUE SE MUEVE */
+.franja-texto {
+  white-space: nowrap;
+  display: inline-block;
+  padding-left: 100%;
+  animation: moverTexto 15s linear infinite;
   font-weight: 500;
   font-size: 14px;
-  z-index: 1000;
-    }
+}
 
-/* Animación tipo movimiento */
-@keyframes deslizar {
-  0% { text-indent: 100%; }
-  100% { text-indent: -100%; }
+/* Animación horizontal */
+@keyframes moverTexto {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
       }
+
+
+
+
     
   </style>
 </head>
@@ -238,7 +254,9 @@
 
   <!-- FRANJA SUPERIOR -->
   <div class="franja-envio">
+  <div class="franja-texto">
     🚚 Envíos a nivel nacional 🇵🇪 | Pago contra entrega disponible
+  </div>
   </div>
   <!-- FRANJA SUPERIOR -->
   
