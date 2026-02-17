@@ -213,21 +213,18 @@
 
 /* ================== FRANJA SUPERIOR ================== */
 .franja-envio {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   background: linear-gradient(90deg, #FF002F, #cc0026);
   color: #fff;
   text-align: center;
-  padding: 8px 10px;
+  padding: 8px 0;
   font-weight: 500;
   font-size: 14px;
-  letter-spacing: 0.5px;
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  animation: deslizar 15s linear infinite;
-  white-space: nowrap;
-  overflow: hidden;
-}
+  z-index: 1000;
+    }
 
 /* Animación tipo movimiento */
 @keyframes deslizar {
