@@ -213,35 +213,38 @@
   position: sticky;
   top: 0;
   width: 100%;
+  overflow: hidden;
   background: linear-gradient(90deg, #FF002F, #cc0026);
   color: #fff;
-  overflow: hidden;
   z-index: 1000;
   padding: 6px 0;
 }
 
-.franja-contenido {
+/* Pista que se mueve */
+.franja-track {
   display: flex;
-  gap: 80px; /* espacio entre repeticiones */
-  animation: moverContinuo 15s linear infinite;
+  width: max-content;
+  animation: scrollContinuo 12s linear infinite;
 }
 
+/* Texto */
 .franja-texto {
   white-space: nowrap;
+  padding-right: 80px; /* espacio entre repeticiones */
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 1px;
 }
 
-/* Animación correcta */
-@keyframes moverContinuo {
-  0% {
-    transform: translateX(0%);
+/* Movimiento exacto */
+@keyframes scrollContinuo {
+  from {
+    transform: translateX(0);
   }
-  100% {
+  to {
     transform: translateX(-50%);
   }
-  }
+}
 
     
   </style>
@@ -249,16 +252,12 @@
 <body>
 
   <!-- FRANJA SUPERIOR -->
-  <div class="franja-envio">  
-  <div class="franja-contenido">  
-    <div class="franja-texto">
-      🚚 Envíos a nivel nacional 
-    </div>
-    <div class="franja-texto">
-      🚚 Envíos a nivel nacional 📦
-    </div>
-  </div>  
+<div class="franja-envio">
+  <div class="franja-track">
+    <div class="franja-texto">🚚 Envíos a nivel nacional 📦</div>
+    <div class="franja-texto">🚚 Envíos a nivel nacional 📦</div>
   </div>
+</div>
   <!-- FRANJA SUPERIOR -->
   
   <h1 id="titulo-happy">
