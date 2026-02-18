@@ -218,13 +218,45 @@
 const API_URL = "https://script.google.com/macros/s/AKfycbz5jmczBym2G_VaClZiNriAqYTpF-6qDSnRzWhRaSNHtGlDHECy03PhJT0polNG00endw/exec";
 let listaProductos = [];
 
-  async function cargarProductos() {  
+
+  
+  function shuffleConSemilla(array, semilla) {
+  let copia = [...array];
+
+  for (let i = copia.length - 1; i > 0; i--) {
+    const j = Math.floor(randomConSemilla(semilla + i) * (i + 1));
+    [copia[i], copia[j]] = [copia[j], copia[i]];
+  }
+
+  return copia;
+}
+
+function randomConSemilla(semilla) {
+  const x = Math.sin(semilla) * 10000;
+  return x - Math.floor(x);
+}
+
+async function cargarProductos() {  
   const respuesta = await fetch(API_URL);  
   listaProductos = await respuesta.json();  
-  listaProductos = listaProductos.slice(1).sort(() => Math.random() - 0.5);  
-  mostrarProductosEnPantalla();  
-}  
 
+  // Quitar encabezado del Sheet
+  listaProductos = listaProductos.slice(1);
+
+  // Semilla basada en la fecha actual
+  const hoy = new Date();
+  const semillaDelDia =
+    hoy.getFullYear() * 10000 +
+    (hoy.getMonth() + 1) * 100 +
+    hoy.getDate();
+
+  // Mezcla estable durante todo el día
+  listaProductos = shuffleConSemilla(listaProductos, semillaDelDia);
+
+  mostrarProductosEnPantalla();
+  }
+
+  
 function generarEstrellas(valorEstado) {
   const valor = valorEstado / 2;
   let html = '';
