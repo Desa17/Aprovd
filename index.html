@@ -218,22 +218,17 @@
 const API_URL = "https://script.google.com/macros/s/AKfycbz5jmczBym2G_VaClZiNriAqYTpF-6qDSnRzWhRaSNHtGlDHECy03PhJT0polNG00endw/exec";
 let listaProductos = [];
 
+
+
 async function cargarProductos() {
+  const respuesta = await fetch(API_URL);
+  listaProductos = await respuesta.json();
+  listaProductos = listaProductos.slice(1).sort(() => Math.random() - 0.5);
+  mostrarProductosEnPantalla();
+}
 
-  // 👇 Mensaje mientras carga
-  document.getElementById('productos').innerHTML = "<p>Cargando productos...</p>";
 
-  try {
-    const respuesta = await fetch(API_URL);
-    listaProductos = await respuesta.json();
-    listaProductos = listaProductos.slice(1).sort(() => Math.random() - 0.5);
-    mostrarProductosEnPantalla();
-  } catch(error) {
-    document.getElementById('productos').innerHTML = 
-      "<p>Error cargando productos. Intente más tarde.</p>";
-  }
-  }
-
+  
 function generarEstrellas(valorEstado) {
   const valor = valorEstado / 2;
   let html = '';
