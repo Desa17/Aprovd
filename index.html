@@ -219,61 +219,13 @@ const API_URL = "https://script.google.com/macros/s/AKfycbz5jmczBym2G_VaClZiNriA
 let listaProductos = [];
 
 
-  // Función para obtener/generar semilla única por usuario
-function obtenerSemillaUsuario() {
-  let semilla = localStorage.getItem("semilla_usuario");
-  if (!semilla) {
-    semilla = Math.floor(Math.random() * 1000000); // semilla aleatoria
-    localStorage.setItem("semilla_usuario", semilla);
-  }
-  return Number(semilla);
-}
-
-// Función para mezclar array con semilla
-function shuffleConSemilla(array, semilla) {
-  let copia = [...array];
-  for (let i = copia.length - 1; i > 0; i--) {
-    const j = Math.floor(randomConSemilla(semilla + i) * (i + 1));
-    [copia[i], copia[j]] = [copia[j], copia[i]];
-  }
-  return copia;
-}
-
-// Generador pseudoaleatorio determinista
-function randomConSemilla(semilla) {
-  const x = Math.sin(semilla) * 10000;
-  return x - Math.floor(x);
-}
-
-// Función principal para cargar productos
-async function cargarProductos() {  
+  async function cargarProductos() {  
   const respuesta = await fetch(API_URL);  
-  let listaProductos = await respuesta.json();  
+  listaProductos = await respuesta.json();  
+  listaProductos = listaProductos.slice(1).sort(() => Math.random() - 0.5);  
+  mostrarProductosEnPantalla();  
+}  
 
-  // Quitar encabezado del Sheet si existe
-  listaProductos = listaProductos.slice(1);
-
-  // Fecha actual en formato YYYYMMDD
-  const hoy = new Date();
-  const fechaHoy = hoy.getFullYear() * 10000 + (hoy.getMonth() + 1) * 100 + hoy.getDate();
-
-  // Revisar si ya tenemos un orden guardado para hoy
-  const ordenGuardado = localStorage.getItem("orden_productos_" + fechaHoy);
-  if (ordenGuardado) {
-    // Si existe, usar el orden guardado
-    listaProductos = JSON.parse(ordenGuardado);
-  } else {
-    // Si no existe, mezclar con semilla del usuario + día
-    const semillaUsuario = obtenerSemillaUsuario();
-    const semillaFinal = fechaHoy + semillaUsuario;
-    listaProductos = shuffleConSemilla(listaProductos, semillaFinal);
-
-    // Guardar orden en localStorage para mantenerlo durante el día
-    localStorage.setItem("orden_productos_" + fechaHoy, JSON.stringify(listaProductos));
-  }
-
-  mostrarProductosEnPantalla(listaProductos);
-}
 
   
 function generarEstrellas(valorEstado) {
