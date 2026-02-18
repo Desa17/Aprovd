@@ -271,24 +271,29 @@ function obtenerOrdenProductos(lista) {
   const key = `ordenProductos-${semilla}`;
 
   let ordenGuardado = localStorage.getItem(key);
+  let indices;
 
   if (ordenGuardado) {
-    let indices = JSON.parse(ordenGuardado);
+    indices = JSON.parse(ordenGuardado);
 
-    // Si hay productos nuevos, agregarlos al final y mezclarlos
-    if (indices.length < lista.length) {
-      const nuevos = lista.map((_, i) => i).filter(i => !indices.includes(i));
+    // --- AGREGAR NUEVOS PRODUCTOS ---
+    const nuevos = lista.map((_, i) => i).filter(i => !indices.includes(i));
+    if (nuevos.length > 0) {
       indices = [...indices, ...shuffleConSemilla(nuevos, semilla)];
-      localStorage.setItem(key, JSON.stringify(indices));
     }
 
-    return indices.map(i => lista[i]);
+    // --- ELIMINAR PRODUCTOS QUE YA NO EXISTEN ---
+    indices = indices.filter(i => i < lista.length);
+
+    // Guardar el orden actualizado
+    localStorage.setItem(key, JSON.stringify(indices));
   } else {
     // crear nuevo orden
-    const indices = shuffleConSemilla(lista.map((_, i) => i), semilla);
+    indices = shuffleConSemilla(lista.map((_, i) => i), semilla);
     localStorage.setItem(key, JSON.stringify(indices));
-    return indices.map(i => lista[i]);
   }
+
+  return indices.map(i => lista[i]);
   }
 
 
