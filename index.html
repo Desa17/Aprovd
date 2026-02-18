@@ -222,26 +222,25 @@
 
 .franja-track {
   display: flex;
-  gap: 80px;
-  animation: scrollInfinito 20s linear infinite;
+  width: max-content;
+  animation: scrollContinuo 20s linear infinite;
+  will-change: transform;
 }
 
 .franja-track span {
   white-space: nowrap;
   font-size: 13px;
   font-weight: 500;
+  padding-right: 60px;
 }
 
-@keyframes scrollInfinito {
+    @keyframes scrollContinuo {
   0% {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translateX(-50%);
   }
-}
-    .franja-track {
-  will-change: transform;
     }
   </style>
 </head>
@@ -250,7 +249,7 @@
   <!-- FRANJA SUPERIOR -->
 <div class="franja-envio">
   <div class="franja-track">
-    <span>🚚 Envíos a nivel nacional 🛺</span>
+    <span>🚚 Envíos a nivel nacional 📦</span>
     <span>🚚 Envíos a nivel nacional 📦</span>
   </div>
 </div>
@@ -405,11 +404,11 @@
   </script>
 
 
-
-  <script>
+<script>
   const track = document.querySelector('.franja-track');
   track.innerHTML += track.innerHTML;
-  </script>
+</script>
+  
   
 </body>
 </html>
