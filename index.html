@@ -246,7 +246,7 @@ function mostrarProductosEnPantalla() {
     const estrellas = generarEstrellas(producto[6]);
 
     return `
-      <div class="producto">
+      <article class="producto">
         <div class="slider" id="${sliderId}">
           ${imagenes.map((img,i)=>`<img src="${img}" class="${i===0?'active':''}" alt="${producto[2]}" loading="lazy">`).join('')}
         </div>
@@ -259,7 +259,7 @@ function mostrarProductosEnPantalla() {
         <p>${producto[3]}</p>
         <p><strong>Precio:</strong> S/${producto[4]}</p>
         <button aria-label="Comprar ${producto[2]}" onclick="reservarProducto('${producto[2]}','${producto[1]}')">Comprar</button>
-      </div>
+      </article>
     `;
   }).join('');
 
