@@ -223,7 +223,7 @@
 .franja-track {
   display: flex;
   width: max-content;
-  animation: scrollInfinito 35s linear infinite;
+  animation: scrollReal 30s linear infinite;
   will-change: transform;
 }
 
@@ -234,12 +234,12 @@
   padding-right: 80px;
 }
 
-@keyframes scrollInfinito {
-  from {
+@keyframes scrollReal {
+  0% {
     transform: translateX(0);
   }
-  to {
-    transform: translateX(-50%);
+  100% {
+    transform: translateX(-100%);
   }
 }
   </style>
