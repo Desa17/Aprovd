@@ -222,40 +222,24 @@
 
 .franja-track {
   display: flex;
-  width: max-content;
-  animation: scrollInfinito 15s linear infinite;
+  gap: 80px;
+  animation: scrollInfinito 20s linear infinite;
 }
 
 .franja-track span {
-  padding-right: 80px;
+  white-space: nowrap;
   font-size: 13px;
   font-weight: 500;
-  letter-spacing: 1px;
-  white-space: nowrap;
 }
 
 @keyframes scrollInfinito {
-  from {
+  0% {
     transform: translateX(0);
   }
-  to {
-    transform: translateX(-50%);
+  100% {
+    transform: translateX(-100%);
   }
 }
-
-    
-.franja-track:hover {
-  animation-play-state: paused;
-}
-    .franja-envio {
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-    
-    @media (max-width: 600px) {
-  .franja-track {
-    animation-duration: 20s;
-  }
-    }
   </style>
 </head>
 <body>
@@ -263,9 +247,6 @@
   <!-- FRANJA SUPERIOR -->
 <div class="franja-envio">
   <div class="franja-track">
-    <span>🚚 Envíos a nivel nacional 📦</span>
-    <span>🚚 Envíos a nivel nacional 📦</span>
-    <span>🚚 Envíos a nivel nacional 📦</span>
     <span>🚚 Envíos a nivel nacional 📦</span>
     <span>🚚 Envíos a nivel nacional 📦</span>
   </div>
@@ -420,16 +401,12 @@
     }
   </script>
 
+
+
+  <script>
+  const track = document.querySelector('.franja-track');
+  track.innerHTML += track.innerHTML;
+  </script>
+  
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-  
