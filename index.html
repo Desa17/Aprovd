@@ -219,12 +219,66 @@ const API_URL = "https://script.google.com/macros/s/AKfycbz5jmczBym2G_VaClZiNriA
 let listaProductos = [];
 
 
+// ------------------- RANDOM CON SEMILLA -------------------
+function randomConSemilla(seed) {
+  var x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+
+function shuffleConSemilla(array, semilla) {
+  let copia = [...array];
+  for (let i = copia.length - 1; i > 0; i--) {
+    const j = Math.floor(randomConSemilla(semilla + i) * (i + 1));
+    [copia[i], copia[j]] = [copia[j], copia[i]];
+  }
+  return copia;
+}
+
+// ------------------- USUARIO ÚNICO -------------------
+function getUserId() {
+  let userId = localStorage.getItem("userId");
+  if (!userId) {
+    userId = Math.floor(Math.random() * 1e9);
+    localStorage.setItem("userId", userId);
+  }
+  return parseInt(userId);
+}
+
+// ------------------- SEMILLA DIARIA -------------------
+function getDailySeed() {
+  const today = new Date();
+  const dia = today.getFullYear()*10000 + (today.getMonth()+1)*100 + today.getDate();
+  const userId = getUserId();
+  return dia + userId;
+}
+
+// ------------------- ORDEN PERSISTENTE -------------------
+function obtenerOrdenProductos(lista) {
+  const semilla = getDailySeed();
+  const key = `ordenProductos-${semilla}`;
+
+  let ordenGuardado = localStorage.getItem(key);
+  if (ordenGuardado) {
+    // usar orden guardado
+    const indices = JSON.parse(ordenGuardado);
+    return indices.map(i => lista[i]);
+  } else {
+    // crear nuevo orden
+    const indices = lista.map((_,i) => i);
+    const indicesMezclados = shuffleConSemilla(indices, semilla);
+    localStorage.setItem(key, JSON.stringify(indicesMezclados));
+    return indicesMezclados.map(i => lista[i]);
+  }
+  }
+  
+
   async function cargarProductos() {  
   const respuesta = await fetch(API_URL);  
   listaProductos = await respuesta.json();  
-  listaProductos = listaProductos.slice(1).sort(() => Math.random() - 0.5);  
+  listaProductos = listaProductos.slice(1);
+  listaProductos = obtenerOrdenProductos(listaProductos);
   mostrarProductosEnPantalla();  
-}  
+  }
 
 
   
