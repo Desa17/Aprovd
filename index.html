@@ -221,25 +221,18 @@
 }
 
 .franja-track {
-  display: flex;
-  width: max-content;
-  animation: scrollReal 30s linear infinite;
+  display: inline-block;
+  white-space: nowrap;
+  animation: scrollContinuo 20s linear infinite;
   will-change: transform;
 }
 
-.franja-track span {
-  white-space: nowrap;
-  font-size: 13px;
-  font-weight: 500;
-  padding-right: 80px;
-}
-
-@keyframes scrollReal {
+@keyframes scrollContinuo {
   0% {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translateX(-50%);
   }
 }
   </style>
@@ -247,9 +240,11 @@
 <body>
 
   <!-- FRANJA SUPERIOR -->
-<div class="franja-track">
-  <span>🚚 Envíos a nivel nacional 📦</span>
-  <span>🚚 Envíos a nivel nacional 📦</span>
+<div class="franja-envio">
+  <div class="franja-track">
+    🚚 Envíos a nivel nacional | WhatsApp +51 970 984 529 📦 &nbsp;&nbsp;&nbsp;
+    🚚 Envíos a nivel nacional | WhatsApp +51 970 984 529 📦 &nbsp;&nbsp;&nbsp;
+  </div>
 </div>
   <!-- FRANJA SUPERIOR -->
   
