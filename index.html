@@ -2,13 +2,15 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#FF002F">
+  <meta name="description" content="Tienda de Juguetes Happy Store - productos divertidos y educativos">
+  <meta name="keywords" content="juguetes, tienda, Happy Store, niños, diversión">
   <link rel="manifest" href="/manifest.json">
-  <title>Tienda de Juguetes</title>
-
-  <!-- Google Fonts -->
+  <link rel="icon" href="/favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Fredoka+One&display=swap" rel="stylesheet">
+  <title>Happy Store | Juguetes divertidos</title>
 
   <style>
     /* ================== BODY ================== */
@@ -20,36 +22,15 @@
       color: #333;
     }
 
-    /* ================== FRANJA SUPERIOR ================== */
-    .franja-envio {
-      position: sticky;
-      top: 0;
-      width: 100%;
-      overflow: hidden;
-      background: linear-gradient(90deg, #FF002F, #cc0026);
-      color: #fff;
-      padding: 6px 0;
-      z-index: 1000;
+    /* ================== HEADER Y TITULO ================== */
+    header {
+      text-align: center;
+      margin-bottom: 30px;
     }
 
-    .franja-track {
-      display: inline-block;
-      white-space: nowrap;
-      animation: scrollContinuo 20s linear infinite;
-      will-change: transform;
-    }
-
-    @keyframes scrollContinuo {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    /* ================== TÍTULO ================== */
     #titulo-happy {
       font-family: 'Fredoka One', cursive;
       font-size: 2.2rem;
-      text-align: center;
-      margin-bottom: 30px;
       line-height: 1.2;
       word-break: break-word;
     }
@@ -61,7 +42,6 @@
       font-size: inherit;
     }
 
-    /* Colores y rotaciones */
     #titulo-happy span:nth-child(1) { color: #FF002F; transform: rotate(-5deg); }
     #titulo-happy span:nth-child(2) { color: #FF7F50; transform: rotate(3deg); }
     #titulo-happy span:nth-child(3) { color: #FFA500; transform: rotate(-2deg); }
@@ -79,7 +59,7 @@
       cursor: default;
     }
 
-    /* Responsive */
+    /* Ajustes responsivos para título */
     @media (max-width: 480px) { #titulo-happy { font-size: 1.6rem; } }
     @media (min-width: 481px) and (max-width: 768px) { #titulo-happy { font-size: 2rem; } }
 
@@ -105,7 +85,13 @@
       box-shadow: 0 10px 20px rgba(255,0,47,0.25);
     }
 
-    @media (max-width:768px) { .producto { width: 90%; } }
+    .producto h3 {
+      margin: 10px 0 5px;
+    }
+
+    .producto p {
+      margin: 5px 0;
+    }
 
     /* ================== SLIDER ================== */
     .slider {
@@ -130,20 +116,30 @@
 
     .slider img.active { display: block; }
 
-    .slider-dots { text-align: center; margin-top: 8px; }
+    .slider-dots {
+      text-align: center;
+      margin-top: 8px;
+    }
+
     .slider-dots span {
       display: inline-block;
-      width: 12px; height: 12px;
+      width: 12px;
+      height: 12px;
       background-color: #ddd;
       border-radius: 50%;
       margin: 0 4px;
       cursor: pointer;
       transition: background-color 0.2s;
     }
+
     .slider-dots span.active { background-color: #FF002F; }
 
     /* ================== ESTRELLAS ================== */
-    .estrellas { font-size: 18px; color: #FF002F; margin-bottom: 8px; }
+    .estrellas {
+      font-size: 18px;
+      color: #FF002F;
+      margin-bottom: 8px;
+    }
 
     /* ================== BOTÓN ================== */
     button {
@@ -158,18 +154,23 @@
       transition: all 0.3s;
       box-shadow: 0 4px 8px rgba(255,0,47,0.2);
     }
+
     button:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 12px rgba(255,0,47,0.3);
     }
+
+    @media (max-width:768px) { .producto { width: 90%; } }
 
     /* ================== MODAL ZOOM ================== */
     #zoomModal {
       display: none;
       position: fixed;
       z-index: 1000;
-      left: 0; top: 0;
-      width: 100%; height: 100%;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
       background-color: rgba(0,0,0,0.85);
       justify-content: center;
       align-items: center;
@@ -182,178 +183,167 @@
       cursor: zoom-out;
       transition: transform 0.3s;
     }
+
+    /* ================== FOOTER ================== */
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #777;
+    }
   </style>
 </head>
 <body>
 
-  <!-- ================== HEADER ================== -->
-  <header>
-    <div class="franja-envio">
-      <div class="franja-track">
-        🚚 Envíos a nivel nacional 📦 WhatsApp +51 970 984 529 &nbsp;&nbsp;&nbsp;
-        🚚 Envíos a nivel nacional 📦 WhatsApp +51 970 984 529 &nbsp;&nbsp;&nbsp;
+<header>
+  <h1 id="titulo-happy">
+    <span>H</span><span>a</span><span>p</span><span>p</span><span>y</span>
+    <span> </span>
+    <span>S</span><span>t</span><span>o</span><span>r</span><span>e</span>
+  </h1>
+</header>
+
+<main>
+  <div id="productos" class="productos-container"></div>
+</main>
+
+<div id="zoomModal">
+  <img id="zoomImg" alt="Imagen ampliada del producto">
+</div>
+
+<footer>
+  <p>© 2026 Happy Store | Todos los derechos reservados</p>
+</footer>
+
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbz5jmczBym2G_VaClZiNriAqYTpF-6qDSnRzWhRaSNHtGlDHECy03PhJT0polNG00endw/exec";
+let listaProductos = [];
+
+async function cargarProductos() {
+  const respuesta = await fetch(API_URL);
+  listaProductos = await respuesta.json();
+  listaProductos = listaProductos.slice(1).sort(() => Math.random() - 0.5);
+  mostrarProductosEnPantalla();
+}
+
+function generarEstrellas(valorEstado) {
+  const valor = valorEstado / 2;
+  let html = '';
+  for(let i=0;i<5;i++){
+    if(i < Math.floor(valor)) html += '★';
+    else if(i < valor) html += '⯨';
+    else html += '☆';
+  }
+  return `<span class="estrellas">${html}</span>`;
+}
+
+function mostrarProductosEnPantalla() {
+  const contenedor = document.getElementById('productos');
+  contenedor.innerHTML = listaProductos.map((producto,index)=>{
+    const imagenes = [producto[7],producto[8],producto[9],producto[10],producto[11]].filter(url=>url && url.trim()!=="");
+    const sliderId = `slider-${index}`;
+    const dotsId = `dots-${index}`;
+    const estrellas = generarEstrellas(producto[6]);
+
+    return `
+      <div class="producto">
+        <div class="slider" id="${sliderId}">
+          ${imagenes.map((img,i)=>`<img src="${img}" class="${i===0?'active':''}" alt="${producto[2]}" loading="lazy">`).join('')}
+        </div>
+        <div class="slider-dots" id="${dotsId}">
+          ${imagenes.map((_,i)=>`<span class="${i===0?'active':''}"></span>`).join('')}
+        </div>
+        <p><strong>Código:</strong> ${producto[1]}</p>
+        <p><strong>Estado:</strong> ${estrellas}</p>
+        <h3>${producto[2]}</h3>
+        <p>${producto[3]}</p>
+        <p><strong>Precio:</strong> S/${producto[4]}</p>
+        <button aria-label="Comprar ${producto[2]}" onclick="reservarProducto('${producto[2]}','${producto[1]}')">Comprar</button>
       </div>
-    </div>
+    `;
+  }).join('');
 
-    <h1 id="titulo-happy">
-      <span>H</span><span>a</span><span>p</span><span>p</span><span>y</span>
-      <span> </span>
-      <span>S</span><span>t</span><span>o</span><span>r</span><span>e</span>
-    </h1>
-  </header>
+  listaProductos.forEach((_,i)=>inicializarSlider(i));
+}
 
-  <!-- ================== MAIN ================== -->
-  <main>
-    <div id="productos" class="productos-container"></div>
-  </main>
+async function reservarProducto(nombreProducto, codigoProducto) {
+  const respuesta = await fetch(API_URL, {
+    method: "POST",
+    body: JSON.stringify({ action: "reservar", producto: nombreProducto })
+  });
 
-  <!-- ================== MODAL ZOOM ================== -->
-  <div id="zoomModal"><img id="zoomImg"></div>
+  const data = await respuesta.json();
 
-  <!-- ================== FOOTER ================== -->
-  <footer>
-    <p>© 2026 Happy Store - Todos los derechos reservados</p>
-  </footer>
+  if(data.success){
+    let mensaje = `Hola! Quiero comprar el producto: ${nombreProducto} (Código: ${codigoProducto})`;
+    mensaje = encodeURIComponent(mensaje);
+    window.open(`https://wa.me/51970984529?text=${mensaje}`, '_blank');
+  } else {
+    alert(data.mensaje);
+  }
+}
 
-  <!-- ================== SCRIPT ================== -->
-  <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbz5jmczBym2G_VaClZiNriAqYTpF-6qDSnRzWhRaSNHtGlDHECy03PhJT0polNG00endw/exec";
-    let listaProductos = [];
+function inicializarSlider(index) {
+  const slider = document.getElementById(`slider-${index}`);
+  const dots = document.getElementById(`dots-${index}`).children;
+  if(!slider) return;
+  const imgs = slider.querySelectorAll("img");
+  if(imgs.length<=1) return;
 
-    async function cargarProductos() {
-      try {
-        const respuesta = await fetch(API_URL);
-        listaProductos = await respuesta.json();
-        listaProductos = listaProductos.slice(1).sort(() => Math.random() - 0.5);
-        mostrarProductosEnPantalla();
-      } catch(error) {
-        document.getElementById('productos').innerHTML = "<p>Error cargando productos.</p>";
-        console.error(error);
-      }
-    }
+  let current = 0;
+  let intervalo = setInterval(nextSlide, 3000);
 
-    function generarEstrellas(valorEstado) {
-      const valor = valorEstado / 2;
-      let html = '';
-      for(let i=0;i<5;i++){
-        if(i < Math.floor(valor)) html += '★';
-        else if(i < valor) html += '⯨';
-        else html += '☆';
-      }
-      return `<span class="estrellas">${html}</span>`;
-    }
+  function nextSlide() {
+    imgs[current].classList.remove("active");
+    dots[current].classList.remove("active");
+    current = (current + 1) % imgs.length;
+    imgs[current].classList.add("active");
+    dots[current].classList.add("active");
+  }
 
-    function mostrarProductosEnPantalla() {
-      const contenedor = document.getElementById('productos');
-      contenedor.innerHTML = listaProductos.map((producto,index)=>{
-        const imagenes = [producto[7],producto[8],producto[9],producto[10],producto[11]].filter(url=>url && url.trim()!=="");
-        const sliderId = `slider-${index}`;
-        const dotsId = `dots-${index}`;
-        const estrellas = generarEstrellas(producto[6]);
+  imgs.forEach(img=>img.addEventListener('click', ()=>{
+    clearInterval(intervalo);
+    document.getElementById('zoomImg').src = img.src;
+    document.getElementById('zoomModal').style.display = 'flex';
+  }));
 
-        return `
-          <article class="producto">
-            <div class="slider" id="${sliderId}">
-              ${imagenes.map((img,i)=>`<img src="${img}" class="${i===0?'active':''}" alt="${producto[2]}">`).join('')}
-            </div>
-            <div class="slider-dots" id="${dotsId}">
-              ${imagenes.map((_,i)=>`<span class="${i===0?'active':''}"></span>`).join('')}
-            </div>
-            <p><strong>Código:</strong> ${producto[1]}</p>
-            <p><strong>Estado:</strong> ${estrellas}</p>
-            <h3>${producto[2]}</h3>
-            <p>${producto[3]}</p>
-            <p><strong>Precio:</strong> S/${producto[4]}</p>
-            <button onclick="reservarProducto('${producto[2]}','${producto[1]}')">Comprar</button>
-          </article>
-        `;
-      }).join('');
+  document.getElementById('zoomModal').addEventListener('click', ()=>{
+    document.getElementById('zoomModal').style.display = 'none';
+    intervalo = setInterval(nextSlide, 3000);
+  });
 
-      listaProductos.forEach((_,i)=>inicializarSlider(i));
-    }
+  Array.from(dots).forEach((dot,i)=>{
+    dot.addEventListener('click', ()=>{ cambiarSlide(i); });
+  });
 
-    async function reservarProducto(nombreProducto, codigoProducto) {
-      const respuesta = await fetch(API_URL, {
-        method: "POST",
-        body: JSON.stringify({ action: "reservar", producto: nombreProducto })
-      });
+  let startX = 0;
+  slider.addEventListener('mousedown', e=>{ startX=e.clientX; clearInterval(intervalo); });
+  slider.addEventListener('mouseup', e=>{ manejarSwipe(e.clientX - startX); });
+  slider.addEventListener('touchstart', e=>{ startX=e.touches[0].clientX; clearInterval(intervalo); });
+  slider.addEventListener('touchend', e=>{ manejarSwipe(e.changedTouches[0].clientX - startX); });
 
-      const data = await respuesta.json();
+  function manejarSwipe(diff){
+    if(diff>50) current = (current-1+imgs.length)%imgs.length;
+    else if(diff<-50) current = (current+1)%imgs.length;
+    cambiarSlide(current);
+    intervalo = setInterval(nextSlide, 3000);
+  }
 
-      if(data.success){
-        let mensaje = `Hola! Quiero comprar el producto: ${nombreProducto} (Código: ${codigoProducto})`;
-        mensaje = encodeURIComponent(mensaje);
-        window.open(`https://wa.me/51970984529?text=${mensaje}`, '_blank');
-      } else {
-        alert(data.mensaje);
-      }
-    }
+  function cambiarSlide(nuevo){
+    imgs.forEach(img=>img.classList.remove("active"));
+    Array.from(dots).forEach(dot=>dot.classList.remove("active"));
+    current = nuevo;
+    imgs[current].classList.add("active");
+    dots[current].classList.add("active");
+  }
+}
 
-    function inicializarSlider(index) {
-      const slider = document.getElementById(`slider-${index}`);
-      const dots = document.getElementById(`dots-${index}`).children;
-      if(!slider) return;
-      const imgs = slider.querySelectorAll("img");
-      if(imgs.length<=1) return;
+cargarProductos();
 
-      let current = 0;
-      let intervalo = setInterval(nextSlide, 3000);
-
-      function nextSlide() {
-        imgs[current].classList.remove("active");
-        dots[current].classList.remove("active");
-        current = (current + 1) % imgs.length;
-        imgs[current].classList.add("active");
-        dots[current].classList.add("active");
-      }
-
-      imgs.forEach(img=>img.addEventListener('click', ()=>{
-        clearInterval(intervalo);
-        document.getElementById('zoomImg').src = img.src;
-        document.getElementById('zoomModal').style.display = 'flex';
-      }));
-
-      document.getElementById('zoomModal').addEventListener('click', ()=>{
-        document.getElementById('zoomModal').style.display = 'none';
-        intervalo = setInterval(nextSlide, 3000);
-      });
-
-      Array.from(dots).forEach((dot,i)=>{
-        dot.addEventListener('click', ()=>{ cambiarSlide(i); });
-      });
-
-      let startX = 0;
-      slider.addEventListener('mousedown', e=>{ startX=e.clientX; clearInterval(intervalo); });
-      slider.addEventListener('mouseup', e=>{ manejarSwipe(e.clientX - startX); });
-      slider.addEventListener('touchstart', e=>{ startX=e.touches[0].clientX; clearInterval(intervalo); });
-      slider.addEventListener('touchend', e=>{ manejarSwipe(e.changedTouches[0].clientX - startX); });
-
-      function manejarSwipe(diff){
-        if(diff>50) current = (current-1+imgs.length)%imgs.length;
-        else if(diff<-50) current = (current+1)%imgs.length;
-        cambiarSlide(current);
-        intervalo = setInterval(nextSlide, 3000);
-      }
-
-      function cambiarSlide(nuevo){
-        imgs.forEach(img=>img.classList.remove("active"));
-        Array.from(dots).forEach(dot=>dot.classList.remove("active"));
-        current = nuevo;
-        imgs[current].classList.add("active");
-        dots[current].classList.add("active");
-      }
-    }
-
-    cargarProductos();
-
-    if('serviceWorker' in navigator){
-      navigator.serviceWorker.register('/sw.js').then(()=>console.log('Service Worker registrado'));
-    }
-
-    // ================== DUPLICAR FRANJA PARA SCROLL INFINITO ==================
-    const track = document.querySelector('.franja-track');
-    track.innerHTML += track.innerHTML;
-  </script>
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('/sw.js').then(()=>console.log('Service Worker registrado'));
+}
+</script>
 
 </body>
-  </html>
+                                                              </html>
