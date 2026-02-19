@@ -134,11 +134,45 @@
     .slider-dots span.active { background-color: #FF002F; }
 
     /* ================== ESTRELLAS ================== */
-    .estrellas {
-      font-size: 18px;
-      color: #FF002F;
-      margin-bottom: 8px;
-    }
+    
+
+
+
+
+
+
+.estrellas {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 8px;
+}
+
+.estrella {
+  font-size: 18px;
+  position: relative;
+}
+
+.estrella.llena {
+  color: #FF002F;
+}
+
+.estrella.vacia {
+  color: #ddd;
+}
+
+.estrella.media {
+  color: #ddd;
+}
+
+.estrella.media::before {
+  content: "★";
+  color: #FF002F;
+  position: absolute;
+  width: 50%;
+  overflow: hidden;
+}
+
+    
 
     /* ================== BOTÓN ================== */
     button {
@@ -377,21 +411,37 @@ function obtenerOrdenProductos(lista) {
   }
 
 
+
+
+
+
+
   
 function generarEstrellas(valorEstado) {
-  const valor = valorEstado / 2;
+  const valor = valorEstado / 2; // convertir 1-10 a 1-5
   let html = '';
-  for(let i=0;i<5;i++){
-    if(i < Math.floor(valor)) html += '★';
-    else if(i < valor) html += '⯨';
-    else html += '☆';
+
+  for (let i = 1; i <= 5; i++) {
+    if (valor >= i) {
+      html += '<span class="estrella llena">★</span>';
+    } 
+    else if (valor >= i - 0.5) {
+      html += '<span class="estrella media">★</span>';
+    } 
+    else {
+      html += '<span class="estrella vacia">★</span>';
+    }
   }
-  return `<span class="estrellas">${html}</span>`;
-}
+
+  return `<div class="estrellas">${html}</div>`;
+  }
 
 
 
 
+
+
+  
 
 
 function mostrarProductosEnPantalla() {
