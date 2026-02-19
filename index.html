@@ -418,7 +418,7 @@ function obtenerOrdenProductos(lista) {
 
   
 function generarEstrellas(valorEstado) {
-  const valor = Number(valorEstado) / 2; // convertir 1-10 a 1-5
+  const valor = Number(valorEstado) / 2;
   let html = '';
 
   for (let i = 1; i <= 5; i++) {
@@ -433,7 +433,7 @@ function generarEstrellas(valorEstado) {
     }
   }
 
-  return `<div class="estrellas">${html}</div>`;
+  return `<span class="estrellas">${html}</span>`;
   }
 
 
