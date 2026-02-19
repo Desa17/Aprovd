@@ -421,7 +421,10 @@ function mostrarProductosEnPantalla() {
         <h3>${producto[2]}</h3>
         <p>${producto[3]}</p>
         <p><strong>Precio:</strong> S/${producto[4]}</p>
-        <button aria-label="Comprar ${producto[2]}" onclick="reservarProducto('${producto[2]}','${producto[1]}')">Comprar</button>
+        ${producto[5] === "Reservado"
+? `<button disabled style="background:#999">Reservado</button>`
+: `<button onclick="reservarProducto('${producto[2]}','${producto[1]}', this)">Comprar</button>`
+  }
       </article>
     `;
   }).join('');
