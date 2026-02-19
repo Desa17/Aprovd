@@ -406,7 +406,7 @@ function mostrarProductosEnPantalla() {
     const imagenes = [producto[7],producto[8],producto[9],producto[10],producto[11]].filter(url=>url && url.trim()!=="");
     const sliderId = `slider-${index}`;
     const dotsId = `dots-${index}`;
-    const estrellas = generarEstrellas(producto[6]);
+    const estrellas = generarEstrellas(producto[5]);
 
     return `
       <article class="producto">
