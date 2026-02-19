@@ -500,6 +500,8 @@ function inicializarSlider(index) {
   }
 }
 
+
+
 function actualizarPaginacion() {
   const contenedor = document.getElementById('paginacion');
   contenedor.innerHTML = '';
@@ -511,20 +513,35 @@ function actualizarPaginacion() {
   btnAnterior.onclick = () => cambiarPagina(-1);
   contenedor.appendChild(btnAnterior);
 
-  const maxItems = Math.floor(window.innerWidth / 50); // ancho estimado de 50px por página
   let mostrar = [];
+  const anchoPantalla = window.innerWidth;
 
-  if (totalPaginas <= maxItems) {
-    for (let i = 1; i <= totalPaginas; i++) mostrar.push(i);
-  } else {
+  if (anchoPantalla <= 480) {
+    // MÓVIL: mostrar 3 números alrededor de la página actual + primero y último
     mostrar.push(1); // primera página siempre
-    let start = Math.max(paginaActual - 2, 2);
-    let end = Math.min(paginaActual + 2, totalPaginas - 1);
+    if (paginaActual > 3) mostrar.push('...');
 
-    if (start > 2) mostrar.push('...');
+    const start = Math.max(2, paginaActual - 1);
+    const end = Math.min(totalPaginas - 1, paginaActual + 1);
+
     for (let i = start; i <= end; i++) mostrar.push(i);
-    if (end < totalPaginas - 1) mostrar.push('...');
-    mostrar.push(totalPaginas); // última página siempre
+
+    if (paginaActual < totalPaginas - 2) mostrar.push('...');
+    if (totalPaginas > 1) mostrar.push(totalPaginas); // última página siempre
+  } else {
+    // Escritorio: mostrar hasta 5 números alrededor de la página actual
+    if (totalPaginas <= 7) {
+      for (let i = 1; i <= totalPaginas; i++) mostrar.push(i);
+    } else {
+      mostrar.push(1);
+      let start = Math.max(paginaActual - 2, 2);
+      let end = Math.min(paginaActual + 2, totalPaginas - 1);
+
+      if (start > 2) mostrar.push('...');
+      for (let i = start; i <= end; i++) mostrar.push(i);
+      if (end < totalPaginas - 1) mostrar.push('...');
+      mostrar.push(totalPaginas);
+    }
   }
 
   mostrar.forEach(i => {
@@ -548,6 +565,9 @@ function actualizarPaginacion() {
   contenedor.appendChild(btnSiguiente);
 }
 
+
+
+  
 // Actualizar paginación al cambiar tamaño de ventana
 window.addEventListener('resize', actualizarPaginacion);
 
