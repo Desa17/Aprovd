@@ -190,6 +190,67 @@
       font-size: 0.9rem;
       color: #777;
     }
+
+/* ================== PAGINACION PROFESIONAL ================== */
+.paginacion-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+  user-select: none;
+}
+
+.paginacion-container button {
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  background-color: #FF002F;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(255,0,47,0.2);
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+
+.paginacion-container button:hover:not(:disabled) {
+  background-color: #cc0026;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(255,0,47,0.3);
+}
+
+.paginacion-container button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.paginacion-container .numero-pagina {
+  min-width: 32px;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #333;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.paginacion-container .numero-pagina:hover {
+  background-color: #FF002F;
+  color: #fff;
+}
+
+.paginacion-container .numero-pagina.active {
+  background-color: #FF002F;
+  color: #fff;
+}
+    
   </style>
 </head>
 <body>
@@ -205,12 +266,8 @@
 <main>
   <div id="productos" class="productos-container"></div>
 
+  <div id="paginacion" class="paginacion-container"></div>
   
-  <div id="paginacion" style="text-align:center; margin-top:20px;">
-  <button id="anterior" onclick="cambiarPagina(-1)">Anterior</button>
-  <span id="paginaActual">1</span> / <span id="totalPaginas">1</span>
-  <button id="siguiente" onclick="cambiarPagina(1)">Siguiente</button>
-</div>
 </main>
 
 <div id="zoomModal">
@@ -333,9 +390,6 @@ function mostrarProductosEnPantalla() {
   const contenedor = document.getElementById('productos');
   
   totalPaginas = Math.ceil(listaProductos.length / productosPorPagina);
-  document.getElementById('totalPaginas').textContent = totalPaginas;
-  document.getElementById('paginaActual').textContent = paginaActual;
-
   const inicio = (paginaActual - 1) * productosPorPagina;
   const fin = inicio + productosPorPagina;
   const productosPagina = listaProductos.slice(inicio, fin);
@@ -365,6 +419,8 @@ function mostrarProductosEnPantalla() {
   }).join('');
 
   productosPagina.forEach((_,i)=>inicializarSlider(i));
+
+  actualizarPaginacion();
 }
 
 
@@ -444,6 +500,36 @@ function inicializarSlider(index) {
   }
 }
 
+
+function actualizarPaginacion() {
+  const contenedor = document.getElementById('paginacion');
+  contenedor.innerHTML = '';
+
+  // Botón anterior
+  const btnAnterior = document.createElement('button');
+  btnAnterior.textContent = '‹';
+  btnAnterior.disabled = paginaActual === 1;
+  btnAnterior.onclick = () => cambiarPagina(-1);
+  contenedor.appendChild(btnAnterior);
+
+  // Números de página
+  for(let i=1; i<=totalPaginas; i++){
+    const numero = document.createElement('span');
+    numero.textContent = i;
+    numero.className = 'numero-pagina' + (i===paginaActual?' active':'');
+    numero.onclick = () => { paginaActual = i; mostrarProductosEnPantalla(); };
+    contenedor.appendChild(numero);
+  }
+
+  // Botón siguiente
+  const btnSiguiente = document.createElement('button');
+  btnSiguiente.textContent = '›';
+  btnSiguiente.disabled = paginaActual === totalPaginas;
+  btnSiguiente.onclick = () => cambiarPagina(1);
+  contenedor.appendChild(btnSiguiente);
+}
+
+    
 cargarProductos();
 
 
