@@ -79,8 +79,10 @@
       transition: transform 0.2s, box-shadow 0.2s;
     }
 
-
-                                     }
+.producto > * + * {
+  margin-top: 10px;
+    }
+                                     
 
     
     .producto:hover {
@@ -88,14 +90,16 @@
       box-shadow: 0 10px 20px rgba(255,0,47,0.25);
     }
 
-    .producto h3 {
-      margin: 5px 0;
-    }
+.producto p {
+  margin: 3px 0;
+  line-height: 1.35;
+}
 
-    .producto p {
-      margin: 5px 0;
-    }
-
+.producto h3 {
+  margin: 6px 0 4px;
+  line-height: 1.2;
+}
+    
     /* ================== SLIDER ================== */
     .slider {
       position: relative;
