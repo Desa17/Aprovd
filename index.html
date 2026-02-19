@@ -500,7 +500,6 @@ function inicializarSlider(index) {
   }
 }
 
-
 function actualizarPaginacion() {
   const contenedor = document.getElementById('paginacion');
   contenedor.innerHTML = '';
@@ -512,14 +511,34 @@ function actualizarPaginacion() {
   btnAnterior.onclick = () => cambiarPagina(-1);
   contenedor.appendChild(btnAnterior);
 
-  // Números de página
-  for(let i=1; i<=totalPaginas; i++){
-    const numero = document.createElement('span');
-    numero.textContent = i;
-    numero.className = 'numero-pagina' + (i===paginaActual?' active':'');
-    numero.onclick = () => { paginaActual = i; mostrarProductosEnPantalla(); };
-    contenedor.appendChild(numero);
+  const maxItems = Math.floor(window.innerWidth / 50); // ancho estimado de 50px por página
+  let mostrar = [];
+
+  if (totalPaginas <= maxItems) {
+    for (let i = 1; i <= totalPaginas; i++) mostrar.push(i);
+  } else {
+    mostrar.push(1); // primera página siempre
+    let start = Math.max(paginaActual - 2, 2);
+    let end = Math.min(paginaActual + 2, totalPaginas - 1);
+
+    if (start > 2) mostrar.push('...');
+    for (let i = start; i <= end; i++) mostrar.push(i);
+    if (end < totalPaginas - 1) mostrar.push('...');
+    mostrar.push(totalPaginas); // última página siempre
   }
+
+  mostrar.forEach(i => {
+    const span = document.createElement('span');
+    if (i === '...') {
+      span.textContent = '...';
+      span.style.pointerEvents = 'none';
+    } else {
+      span.textContent = i;
+      span.className = 'numero-pagina' + (i === paginaActual ? ' active' : '');
+      span.onclick = () => { paginaActual = i; mostrarProductosEnPantalla(); };
+    }
+    contenedor.appendChild(span);
+  });
 
   // Botón siguiente
   const btnSiguiente = document.createElement('button');
@@ -528,6 +547,9 @@ function actualizarPaginacion() {
   btnSiguiente.onclick = () => cambiarPagina(1);
   contenedor.appendChild(btnSiguiente);
 }
+
+// Actualizar paginación al cambiar tamaño de ventana
+window.addEventListener('resize', actualizarPaginacion);
 
     
 cargarProductos();
