@@ -566,16 +566,24 @@ function mostrarProductosEnPantalla() {
 
   if (data.success) {
 
-    // Cambiar definitivamente a reservado
-    boton.innerText = "Reservado";
-    boton.style.background = "#999";
+  // Cambiar definitivamente a reservado
+  boton.innerText = "Reservado";
+  boton.style.background = "#999";
 
-    let mensaje = `Hola! Quiero comprar el producto: ${nombreProducto} (Código: ${codigoProducto})`;
-    mensaje = encodeURIComponent(mensaje);
+  // ACTUALIZAR LISTA LOCAL (IMPORTANTE)
+  listaProductos.forEach(p => {
+    if(p[1] === codigoProducto){
+      p[6] = "reservado";
+    }
+  });
 
-    window.open(`https://wa.me/51970984529?text=${mensaje}`, '_blank');
+  let mensaje = `Hola! Quiero comprar el producto: ${nombreProducto} (Código: ${codigoProducto})`;
+  mensaje = encodeURIComponent(mensaje);
 
-  } else {
+  window.open(`https://wa.me/51970984529?text=${mensaje}`, '_blank');
+  }
+  
+  else {
 
     // Si falla, restaurar botón
     boton.innerText = "Comprar";
