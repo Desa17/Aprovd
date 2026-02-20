@@ -13,20 +13,58 @@
 
   <style>
     /* ================== BODY ================== */
-    body {
-      font-family: 'Roboto', sans-serif;
-      margin: 0;
-      padding: 20px;
-      background-color: #f5f5f5;
-      color: #333;
-    }
+    
 
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding-top: 40px; /* espacio igual a la altura del header */
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+
+    
     /* ================== HEADER Y TITULO ================== */
-    header {
+   /* header {
       text-align: center;
       margin-bottom: 30px;
-    }
+    }*/
 
+
+/* ================== CONTENEDOR ================== */
+.contenedor {
+  max-width: 1200px;        /* ancho máximo del contenido */
+  margin: 0 auto;           /* centrado horizontal */
+  padding:  25px;          /* espacio interno a los lados */
+  background-color: transparent; /* fondo transparente inicialmente */
+}
+
+/* ================== HEADER ================== */
+header {
+  position: fixed;           /* siempre pegado arriba */
+  top: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 999;
+ /* padding: 15px 0;*/
+  transition: background-color 0.3s, box-shadow 0.3s;
+  background-color: transparent; /* transparente inicialmente */
+  box-shadow: none;             /* sin sombra al inicio */
+}
+
+/* Header con fondo y sombra al hacer scroll */
+header.scrolled {
+  background-color: #fff;              /* fondo blanco */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* sombra suave */
+}
+
+
+
+
+
+
+    
     #titulo-happy {
       font-family: 'Fredoka One', cursive;
       font-size: 2.2rem;
@@ -662,6 +700,23 @@ cargarProductos();
   }
 
 
+
+
+
+
+
+
+    // Cambiar fondo del header al hacer scroll
+const header = document.querySelector('header');
+
+window.addEventListener('scroll', () => {
+  if(window.scrollY > 50){ // si se scrollea más de 50px
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+});
+  
   
 
 </script>
