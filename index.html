@@ -516,9 +516,8 @@ function mostrarProductosEnPantalla() {
     } else if (estado === "vendido") {
       botonHtml = `<button disabled style="background:#333">Vendido</button>`;
     } else {
-      botonHtml = `<button onclick="reservarProducto('${producto[2]}','${producto[1]}', this)">Comprar</button>`;
-    }
-
+      botonHtml = `<button id="btn-${producto[1]}" onclick="reservarProducto('${producto[2]}','${producto[1]}', this)">Comprar</button>`;
+  }
     // ------------------ HTML DEL PRODUCTO ------------------
     return `
       <article class="producto">
@@ -721,9 +720,37 @@ window.addEventListener('resize', actualizarPaginacion);
 cargarProductos();
 
 
+async function actualizarSoloEstados() {
 
+  const respuesta = await fetch(API_URL);
+  let data = await respuesta.json();
+  data = data.slice(1);
 
+  data.forEach(producto => {
 
+    const codigo = producto[1];
+    const estado = (producto[6] || "").trim().toLowerCase();
+
+    const boton = document.getElementById("btn-" + codigo);
+    if(!boton) return;
+
+    if(estado === "reservado"){
+      boton.innerText = "Reservado";
+      boton.disabled = true;
+      boton.style.background = "#999";
+    }
+    else if(estado === "vendido"){
+      boton.innerText = "Vendido";
+      boton.disabled = true;
+      boton.style.background = "#333";
+    }
+  });
+
+  }
+
+setInterval(() => {
+  actualizarSoloEstados();
+}, 10000);
 
 
 
