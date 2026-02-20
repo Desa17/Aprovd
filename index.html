@@ -713,7 +713,18 @@ window.addEventListener('scroll', () => {
     header.classList.remove('scrolled');
   }
 });
-  
+
+  // Ajusta el padding-top del body según la altura real del header
+function ajustarPaddingHeader() {
+  const header = document.querySelector('header');
+  document.body.style.paddingTop = header.offsetHeight + 'px';
+}
+
+// Ejecutar al cargar la página
+window.addEventListener('load', ajustarPaddingHeader);
+
+// Ejecutar al cambiar tamaño de ventana (responsive)
+window.addEventListener('resize', ajustarPaddingHeader);
   
 
 </script>
