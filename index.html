@@ -489,50 +489,66 @@ function generarEstrellas(valorEstado) {
 
 
   
-
-
 function mostrarProductosEnPantalla() {
   const contenedor = document.getElementById('productos');
-  
+
   totalPaginas = Math.ceil(listaProductos.length / productosPorPagina);
   const inicio = (paginaActual - 1) * productosPorPagina;
   const fin = inicio + productosPorPagina;
   const productosPagina = listaProductos.slice(inicio, fin);
 
-  contenedor.innerHTML = productosPagina.map((producto,index)=>{
-    const imagenes = [producto[7],producto[8],producto[9],producto[10],producto[11]].filter(url=>url && url.trim()!=="");
+  contenedor.innerHTML = productosPagina.map((producto, index) => {
+
+    // ------------------ IMÁGENES ------------------
+    const imagenes = [producto[7], producto[8], producto[9], producto[10], producto[11]]
+      .filter(url => url && url.trim() !== "");
     const sliderId = `slider-${index}`;
     const dotsId = `dots-${index}`;
+
+    // ------------------ ESTRELLAS ------------------
     const estrellas = generarEstrellas(producto[5]);
 
+    // ------------------ ESTADO DEL BOTÓN ------------------
+    const estado = (producto[6] || "").trim().toLowerCase();
+    let botonHtml = '';
+    if (estado === "reservado") {
+      botonHtml = `<button disabled style="background:#999">Reservado</button>`;
+    } else if (estado === "vendido") {
+      botonHtml = `<button disabled style="background:#333">Vendido</button>`;
+    } else {
+      botonHtml = `<button onclick="reservarProducto('${producto[2]}','${producto[1]}', this)">Comprar</button>`;
+    }
+
+    // ------------------ HTML DEL PRODUCTO ------------------
     return `
       <article class="producto">
         <div class="slider" id="${sliderId}">
-          ${imagenes.map((img,i)=>`<img src="${img}" class="${i===0?'active':''}" alt="${producto[2]}" loading="lazy">`).join('')}
+          ${imagenes.map((img, i) => `<img src="${img}" class="${i === 0 ? 'active' : ''}" alt="${producto[2]}" loading="lazy">`).join('')}
         </div>
         <div class="slider-dots" id="${dotsId}">
-          ${imagenes.map((_,i)=>`<span class="${i===0?'active':''}"></span>`).join('')}
+          ${imagenes.map((_, i) => `<span class="${i === 0 ? 'active' : ''}"></span>`).join('')}
         </div>
         <p><strong>Código:</strong> ${producto[1]}</p>
         <p><strong>Estado:</strong> ${estrellas}</p>
         <h3>${producto[2]}</h3>
         <p>${producto[3]}</p>
         <p><strong>Precio:</strong> S/${producto[4]}</p>
-        ${producto[6] === "Reservado"
-? `<button disabled style="background:#999">Reservado</button>`
-: `<button onclick="reservarProducto('${producto[2]}','${producto[1]}', this)">Comprar</button>`
-  }
+        ${botonHtml}
       </article>
     `;
   }).join('');
 
-  productosPagina.forEach((_,i)=>inicializarSlider(i));
+  // ------------------ INICIALIZAR SLIDERS ------------------
+  productosPagina.forEach((_, i) => inicializarSlider(i));
 
+  // ------------------ ACTUALIZAR PAGINACIÓN ------------------
   actualizarPaginacion();
 }
 
 
 
+
+  
 
   
 
