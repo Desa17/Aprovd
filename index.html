@@ -707,9 +707,16 @@ async function actualizarSoloEstados() {
       boton.disabled = true;
       boton.style.background = "#333";
     }
+    else if(estado === "disponible"){   // ← ESTA PARTE FALTABA
+
+      boton.innerText = "Comprar";
+      boton.disabled = false;
+      boton.style.background = "";
+    }
+
   });
 
-  }
+}
 
 setInterval(() => {
   actualizarSoloEstados();
