@@ -1024,12 +1024,22 @@ window.addEventListener('resize', ajustarPaddingHeader);
     mostrarCarrito();
   }
 
-  function eliminarDelCarrito(codigo) {
-    carrito = carrito.filter(item => item.codigo !== codigo);
-    actualizarCarritoStorage();
-    actualizarCantidadCarrito();
-    mostrarCarrito();
-  }
+ async function eliminarDelCarrito(codigo) {
+
+  await fetch(API_URL, {
+    method: "POST",
+    body: JSON.stringify({
+      action: "liberar",
+      codigo: codigo
+    })
+  });
+
+  carrito = carrito.filter(item => item.codigo !== codigo);
+
+  actualizarCarritoStorage();
+  actualizarCantidadCarrito();
+  mostrarCarrito();
+}
 
   function cambiarCantidad(codigo, cantidad) {
     const index = carrito.findIndex(item => item.codigo === codigo);
@@ -1076,40 +1086,83 @@ window.addEventListener('resize', ajustarPaddingHeader);
   });
 
   // Checkout
-  document.getElementById('checkoutBtn').addEventListener('click', ()=>{
-    if(carrito.length === 0){
-      alert('Tu carrito está vacío');
-      return;
-    }
-    let mensaje = 'Hola! Quiero comprar estos productos:\n';
-    carrito.forEach(item => {
-      mensaje += `${item.nombre} (Código: ${item.codigo}) x ${item.cantidad} - S/${(item.precio*item.cantidad).toFixed(2)}\n`;
+document.getElementById('checkoutBtn').addEventListener('click', async ()=>{
+
+  if(carrito.length === 0){
+    alert('Tu carrito está vacío');
+    return;
+  }
+
+  // pasar todos a vendido
+  for(const item of carrito){
+    await fetch(API_URL, {
+      method: "POST",
+      body: JSON.stringify({
+        action: "vender",
+        codigo: item.codigo
+      })
     });
-    mensaje += `Total: S/${carrito.reduce((acc,item)=>acc+item.precio*item.cantidad,0).toFixed(2)}`;
-    mensaje = encodeURIComponent(mensaje);
-    window.open(`https://wa.me/51970984529?text=${mensaje}`, '_blank');
+  }
+
+  let mensaje = 'Hola! Quiero comprar:\n';
+
+  carrito.forEach(item => {
+    mensaje += `${item.nombre} (Código: ${item.codigo}) x ${item.cantidad}\n`;
   });
+
+  mensaje = encodeURIComponent(mensaje);
+
+  // vaciar carrito
+  carrito = [];
+  actualizarCarritoStorage();
+  actualizarCantidadCarrito();
+  mostrarCarrito();
+
+  window.open(`https://wa.me/51970984529?text=${mensaje}`, '_blank');
+});
 
   // Inicializar cantidad carrito al cargar
   actualizarCantidadCarrito();
 
   // ================== MODIFICAR BOTÓN COMPRAR EXISTENTE ==================
-  function reservarProducto(nombreProducto, codigoProducto, btn) {
-    // Obtener precio e imagen del producto
+ async function reservarProducto(nombreProducto, codigoProducto, btn) {
+
+  btn.innerText = "Reservando...";
+  btn.disabled = true;
+
+  const respuesta = await fetch(API_URL, {
+    method: "POST",
+    body: JSON.stringify({
+      action: "reservar",
+      codigo: codigoProducto
+    })
+  });
+
+  const data = await respuesta.json();
+
+  if(data.success){
+
+    // agregar al carrito
     const producto = listaProductos.find(p => p[1] === codigoProducto);
+
     const prodObj = {
       nombre: producto[2],
       codigo: producto[1],
       precio: Number(producto[4]),
       imagen: producto[7] || ''
     };
+
     agregarAlCarrito(prodObj);
 
-    // Cambiar botón a "Reservado"
-    btn.disabled = true;
-    btn.textContent = 'Reservado';
-    btn.style.background = '#999';
+    btn.innerText = "Reservado";
+    btn.style.background = "#999";
+
+  } else {
+    alert(data.mensaje);
+    btn.innerText = "Comprar";
+    btn.disabled = false;
   }
+}
 </script>
 
 
