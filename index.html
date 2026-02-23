@@ -1046,7 +1046,7 @@ window.addEventListener('resize', ajustarPaddingHeader);
           </div>
           <div class="carrito-item-controls">
             <input type="number" value="${item.cantidad}" min="1" onchange="cambiarCantidad('${item.codigo}', this.value)">
-            <button onclick="eliminarDelCarrito('${item.codigo}')">X</button>
+            <button onclick="eliminarDelCarrito('${item.codigo}').then(() => actualizarSoloEstados())">X</button>
           </div>
         </div>
       `;
