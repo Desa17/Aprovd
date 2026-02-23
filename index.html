@@ -1004,7 +1004,7 @@ window.addEventListener('resize', ajustarPaddingHeader);
   }
 
  async function eliminarDelCarrito(codigo) {
-
+  // Llamada a la API para liberar el producto
   await fetch(API_URL, {
     method: "POST",
     body: JSON.stringify({
@@ -1013,13 +1013,24 @@ window.addEventListener('resize', ajustarPaddingHeader);
     })
   });
 
+  // Quitar del carrito local
   carrito = carrito.filter(item => item.codigo !== codigo);
 
+  // Actualizar almacenamiento y UI
   actualizarCarritoStorage();
   actualizarCantidadCarrito();
   mostrarCarrito();
-}
 
+  // === RESET DEL BOTÓN DEL PRODUCTO ===
+  const btn = document.getElementById("btn-" + codigo);
+  if(btn){
+    btn.innerText = "Comprar";
+    btn.disabled = false;
+    btn.style.background = "linear-gradient(135deg, #FF002F, #cc0026)";
+    btn.style.boxShadow = "0 4px 8px rgba(255,0,47,0.2)";
+    btn.dataset.loading = ""; // <--- importante para que se pueda volver a comprar
+  }
+  }
   function cambiarCantidad(codigo, cantidad) {
     const index = carrito.findIndex(item => item.codigo === codigo);
     if(index !== -1){
