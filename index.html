@@ -688,6 +688,8 @@ cargarProductos();
 
 async function actualizarSoloEstados() {
 
+if(typeof carrito === "undefined") return;
+  
   const respuesta = await fetch(API_URL);
   let data = await respuesta.json();
   data = data.slice(1);
