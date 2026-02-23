@@ -710,12 +710,21 @@ async function actualizarSoloEstados() {
       boton.disabled = true;
       boton.style.background = "#333";
     }
-    else if(estado === "disponible"){   // ← ESTA PARTE FALTABA
+else if(estado === "disponible"){
 
-      boton.innerText = "Comprar";
-      boton.disabled = false;
-      boton.style.background = "";
-    }
+  boton.innerText = "Comprar";
+  boton.disabled = false;
+  boton.style.background = "";
+
+  // eliminar del carrito si estaba reservado y expiró
+  const index = carrito.findIndex(item => item.codigo === codigo);
+  if(index !== -1){
+    carrito.splice(index, 1);
+    actualizarCarritoStorage();
+    actualizarCantidadCarrito();
+    mostrarCarrito();
+  }
+}
 
   });
 
