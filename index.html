@@ -1091,10 +1091,13 @@ document.getElementById('checkoutBtn').addEventListener('click', async ()=>{
 
   // ================== MODIFICAR BOTÓN COMPRAR EXISTENTE ==================
  async function reservarProducto(nombreProducto, codigoProducto, btn) {
+if(btn.dataset.loading) return;
+btn.dataset.loading = true;
 
+   
 btn.innerText = "Reservando...";
 btn.disabled = true;
-btn.style.background = "#ff8097";
+btn.style.background = "linear-gradient(135deg,#ff8097,#ff4d6d)";
 btn.style.boxShadow = "none";
 
   const respuesta = await fetch(API_URL, {
