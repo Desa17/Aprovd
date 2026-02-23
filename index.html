@@ -1066,10 +1066,16 @@ window.addEventListener('resize', ajustarPaddingHeader);
   }
 
   // BOTÓN CARRITO
-  document.getElementById('carritoBtn').addEventListener('click', ()=>{
-    document.getElementById('carritoModal').style.display = 'flex';
-    mostrarCarrito();
-  });
+  // BOTÓN CARRITO con actualización de botones
+document.getElementById('carritoBtn').addEventListener('click', async ()=>{
+  document.getElementById('carritoModal').style.display = 'flex';
+  
+  // Actualiza los estados de los botones antes de mostrar el carrito
+  await actualizarSoloEstados();
+
+  // Muestra el carrito
+  mostrarCarrito();
+});
 
   document.getElementById('cerrarCarrito').addEventListener('click', ()=>{
     document.getElementById('carritoModal').style.display = 'none';
