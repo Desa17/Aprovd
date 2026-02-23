@@ -713,10 +713,10 @@ if(typeof carrito === "undefined") return;
       boton.style.background = "#333";
     }
 else if(estado === "disponible"){
-
   boton.innerText = "Comprar";
   boton.disabled = false;
   boton.style.background = "";
+  boton.dataset.loading = ""; // <--- resetear aquí
 
   // eliminar del carrito si estaba reservado y expiró
   const index = carrito.findIndex(item => item.codigo === codigo);
