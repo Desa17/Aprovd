@@ -731,7 +731,10 @@ else if(estado === "disponible"){
   });
 
 }
+// Ejecutar al cargar la página
+actualizarSoloEstados();
 
+// Ejecutar cada 10 segundos
 setInterval(() => {
   actualizarSoloEstados();
 }, 10000);
