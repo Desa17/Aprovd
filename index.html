@@ -666,14 +666,11 @@ function actualizarPaginacion() {
       span.onclick = () => { 
   paginaActual = i; 
   mostrarProductosEnPantalla(); 
-  // SCROLL AL INICIO DE LOS PRODUCTOS
-  const contenedor = document.querySelector('.contenedor');
-  if(contenedor){
-    window.scrollTo({
-      top: contenedor.offsetTop - 20,
-      behavior: 'smooth'
-    });
-  }
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
 };
     }
     contenedor.appendChild(span);
@@ -753,21 +750,20 @@ setInterval(() => {
 
 
 
-
-  function cambiarPagina(direccion){
+function cambiarPagina(direccion){
   paginaActual += direccion;
   if(paginaActual < 1) paginaActual = 1;
   if(paginaActual > totalPaginas) paginaActual = totalPaginas;
+
   mostrarProductosEnPantalla();
-// SCROLL AL INICIO DE LOS PRODUCTOS
-  const contenedor = document.querySelector('.contenedor');
-  if(contenedor){
-    window.scrollTo({
-      top: contenedor.offsetTop - 20,
-      behavior: 'smooth'
-    });
-  }    
-  }
+
+  // SCROLL REAL AL INICIO
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
+  
 
 
 
