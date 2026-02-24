@@ -12,10 +12,6 @@
   <title>Happy Store | Juguetes divertidos</title>
 
   <style>
-
-    html{
-  scroll-behavior: smooth;
-    }
     /* ================== BODY ================== */
     
 
@@ -141,7 +137,24 @@ header.scrolled {
   margin: 6px 0 4px;
   line-height: 1.2;
 }
+
+
+
     
+    .producto{
+  animation: fadeIn .35s ease;
+}
+
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform: translateY(10px);
+  }
+  to{
+    opacity:1;
+    transform: translateY(0);
+  }
+}
     /* ================== SLIDER ================== */
     .slider {
       position: relative;
