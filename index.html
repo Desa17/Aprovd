@@ -505,9 +505,37 @@ async function cargarProductos() {
   return true;   // ← AGREGA ESTO
   }
   
+//SCROOL AUTOMÁTICO 
 
+function scrollProductoDesdeURL(){
 
+  const params = new URLSearchParams(window.location.search);
+  const codigo = params.get("producto");
 
+  if(!codigo) return;
+
+  setTimeout(()=>{
+
+    const elemento = document.getElementById("producto-" + codigo);
+
+    if(elemento){
+
+      const offset = 120;
+
+      window.scrollTo({
+        top: elemento.offsetTop - offset,
+        behavior: "smooth"
+      });
+
+      elemento.style.boxShadow = "0 0 0 3px #FF002F";
+      
+      setTimeout(()=>{
+        elemento.style.boxShadow = "";
+      }, 2000);
+    }
+
+  }, 600);
+}
 
 
 
@@ -1282,33 +1310,7 @@ function compartirProducto(codigo, nombre){
 }
 
 
-  // SCROLL COMPARTIR
-  function scrollProductoDesdeURL(){
 
-  const params = new URLSearchParams(window.location.search);
-  const codigo = params.get("producto");
-
-  if(!codigo) return;
-
-  setTimeout(()=>{
-
-    const elemento = document.getElementById("producto-" + codigo);
-
-    if(elemento){
-      elemento.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-      });
-
-      elemento.style.boxShadow = "0 0 0 3px #FF002F";
-      
-      setTimeout(()=>{
-        elemento.style.boxShadow = "";
-      }, 2000);
-    }
-
-  }, 600);
-}
 </script>
 
 
