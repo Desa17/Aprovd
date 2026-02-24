@@ -748,12 +748,14 @@ setInterval(() => {
   if(paginaActual < 1) paginaActual = 1;
   if(paginaActual > totalPaginas) paginaActual = totalPaginas;
   mostrarProductosEnPantalla();
-
-    // Después de actualizar productos y paginación
-window.scrollTo({
-  top: document.querySelector('.contenedor').offsetTop - 30, // ajusta 20px si quieres espacio sobre el primer producto
-  behavior: 'smooth'
-});
+// SCROLL AL INICIO DE LOS PRODUCTOS
+  const contenedor = document.querySelector('.contenedor');
+  if(contenedor){
+    window.scrollTo({
+      top: contenedor.offsetTop - 20,
+      behavior: 'smooth'
+    });
+  }    
   }
 
 
