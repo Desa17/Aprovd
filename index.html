@@ -852,17 +852,17 @@ else if(estado === "disponible"){
   });
 
 }
-// Ejecutar al cargar la página
-window.addEventListener("load", ()=>{
-  actualizarSoloEstados();
-});
+
 
 // Ejecutar cada 10 segundos
 setInterval(() => {
   actualizarSoloEstados();
 }, 10000);
 
-
+// Ejecutar al cargar la página
+window.addEventListener("load", ()=>{
+  actualizarSoloEstados();
+});
 
 
 
