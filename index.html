@@ -802,7 +802,8 @@ function actualizarPaginacion() {
 window.addEventListener('resize', actualizarPaginacion);
 
     
-window.addEventListener("load", ()=>{
+cargarProductos().then(()=>{
+  scrollProductoDesdeURL();
   actualizarSoloEstados();
 });
 
