@@ -380,6 +380,11 @@ header.scrolled {
   text-decoration: underline;
 }
 
+    .link-compartir{
+  background:#fff5f7;
+  padding:4px 8px;
+  border-radius:6px;
+  }
   </style>
 </head>
 <body>
@@ -1260,10 +1265,14 @@ function compartirProducto(codigo, nombre){
       title: nombre,
       text: "Mira este producto",
       url: url
-    });
-  } else {
+    }).catch(()=>{});
+  } 
+  else if(navigator.clipboard){
     navigator.clipboard.writeText(url);
     alert("Link copiado");
+  } 
+  else {
+    prompt("Copia este link:", url);
   }
 }
   
