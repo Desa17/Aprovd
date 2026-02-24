@@ -663,7 +663,18 @@ function actualizarPaginacion() {
     } else {
       span.textContent = i;
       span.className = 'numero-pagina' + (i === paginaActual ? ' active' : '');
-      span.onclick = () => { paginaActual = i; mostrarProductosEnPantalla(); };
+      span.onclick = () => { 
+  paginaActual = i; 
+  mostrarProductosEnPantalla(); 
+  // SCROLL AL INICIO DE LOS PRODUCTOS
+  const contenedor = document.querySelector('.contenedor');
+  if(contenedor){
+    window.scrollTo({
+      top: contenedor.offsetTop - 20,
+      behavior: 'smooth'
+    });
+  }
+};
     }
     contenedor.appendChild(span);
   });
