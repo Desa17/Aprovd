@@ -1249,6 +1249,24 @@ btn.style.boxShadow = "none";
     btn.disabled = false;
   }
 }
+
+  // BOTON COMPARTIR 
+function compartirProducto(codigo, nombre){
+
+  const url = window.location.origin + window.location.pathname + "?producto=" + codigo;
+
+  if(navigator.share){
+    navigator.share({
+      title: nombre,
+      text: "Mira este producto",
+      url: url
+    });
+  } else {
+    navigator.clipboard.writeText(url);
+    alert("Link copiado");
+  }
+}
+  
 </script>
 
 
