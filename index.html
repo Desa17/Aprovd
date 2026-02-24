@@ -514,27 +514,36 @@ function scrollProductoDesdeURL(){
 
   if(!codigo) return;
 
+  // Buscar índice del producto
+  const index = listaProductos.findIndex(p => p[1] === codigo);
+  if(index === -1) return;
+
+  // Calcular página
+  paginaActual = Math.floor(index / productosPorPagina) + 1;
+
+  // Renderizar esa página
+  mostrarProductosEnPantalla();
+
   setTimeout(()=>{
 
     const elemento = document.getElementById("producto-" + codigo);
+    if(!elemento) return;
 
-    if(elemento){
+    const offset = 120;
 
-      const offset = 120;
+    window.scrollTo({
+      top: elemento.offsetTop - offset,
+      behavior: "smooth"
+    });
 
-      window.scrollTo({
-        top: elemento.offsetTop - offset,
-        behavior: "smooth"
-      });
+    // efecto highlight
+    elemento.style.boxShadow = "0 0 0 3px #FF002F";
 
-      elemento.style.boxShadow = "0 0 0 3px #FF002F";
-      
-      setTimeout(()=>{
-        elemento.style.boxShadow = "";
-      }, 2000);
-    }
+    setTimeout(()=>{
+      elemento.style.boxShadow = "";
+    }, 2000);
 
-  }, 600);
+  }, 400);
 }
 
 
