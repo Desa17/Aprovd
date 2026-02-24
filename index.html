@@ -763,9 +763,16 @@ function actualizarPaginacion() {
 window.addEventListener('resize', actualizarPaginacion);
 
     
-cargarProductos().then(()=>{
-  scrollProductoDesdeURL();
-});
+async function cargarProductos() {  
+  const respuesta = await fetch(API_URL);  
+  listaProductos = await respuesta.json();  
+  listaProductos = listaProductos.slice(1);
+  listaProductos = obtenerOrdenProductos(listaProductos);
+
+  mostrarProductosEnPantalla();
+
+  return true;   // ← AGREGA ESTO
+}
 
 
 async function actualizarSoloEstados() {
