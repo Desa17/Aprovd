@@ -356,8 +356,29 @@ header.scrolled {
   color: #fff;
 }
 
+    
+/*---- BOTON COMPARTIR ------*/
+    
+.fila-codigo{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.link-compartir{
+  cursor:pointer;
+  color:#FF002F;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  font-size:.85rem;
+  font-weight:600;
+  transition:.25s;
+}
 
-
+.link-compartir:hover{
+  transform: scale(1.05);
+  text-decoration: underline;
+}
 
   </style>
 </head>
@@ -540,20 +561,45 @@ function mostrarProductosEnPantalla() {
   }
     // ------------------ HTML DEL PRODUCTO ------------------
     return `
-      <article class="producto">
-        <div class="slider" id="${sliderId}">
-          ${imagenes.map((img, i) => `<img src="${img}" class="${i === 0 ? 'active' : ''}" alt="${producto[2]}" loading="lazy">`).join('')}
-        </div>
-        <div class="slider-dots" id="${dotsId}">
-          ${imagenes.map((_, i) => `<span class="${i === 0 ? 'active' : ''}"></span>`).join('')}
-        </div>
-        <p><strong>Código:</strong> ${producto[1]}</p>
-        <p><strong>Estado:</strong> ${estrellas}</p>
-        <h3>${producto[2]}</h3>
-        <p>${producto[3]}</p>
-        <p><strong>Precio:</strong> S/${producto[4]}</p>
-        ${botonHtml}
-      </article>
+          <article class="producto">
+
+  <div class="slider" id="${sliderId}">
+    ${imagenes.map((img, i) => `<img src="${img}" class="${i === 0 ? 'active' : ''}" alt="${producto[2]}" loading="lazy">`).join('')}
+  </div>
+
+  <div class="slider-dots" id="${dotsId}">
+    ${imagenes.map((_, i) => `<span class="${i === 0 ? 'active' : ''}"></span>`).join('')}
+  </div>
+
+  <!-- FILA CODIGO + COMPARTIR -->
+  <div class="fila-codigo">
+    <p><strong>Código:</strong> ${producto[1]}</p>
+
+    <div class="link-compartir"
+onclick="compartirProducto('${producto[1]}','${producto[2]}')">
+
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="18" cy="5" r="3"/>
+    <circle cx="6" cy="12" r="3"/>
+    <circle cx="18" cy="19" r="3"/>
+    <line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/>
+    <line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/>
+  </svg>
+
+  <span>Compartir</span>
+
+</div>
+  </div>
+
+  <p><strong>Estado:</strong> ${estrellas}</p>
+  <h3>${producto[2]}</h3>
+  <p>${producto[3]}</p>
+  <p><strong>Precio:</strong> S/${producto[4]}</p>
+
+  ${botonHtml}
+
+</article>
     `;
   }).join('');
 
