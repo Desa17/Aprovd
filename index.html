@@ -566,7 +566,8 @@ function mostrarProductosEnPantalla() {
   }
     // ------------------ HTML DEL PRODUCTO ------------------
     return `
-          <article class="producto">
+          return `
+  <article class="producto" id="producto-${producto[1]}">
 
   <div class="slider" id="${sliderId}">
     ${imagenes.map((img, i) => `<img src="${img}" class="${i === 0 ? 'active' : ''}" alt="${producto[2]}" loading="lazy">`).join('')}
@@ -762,7 +763,9 @@ function actualizarPaginacion() {
 window.addEventListener('resize', actualizarPaginacion);
 
     
-cargarProductos();
+cargarProductos().then(()=>{
+  scrollProductoDesdeURL();
+});
 
 
 async function actualizarSoloEstados() {
