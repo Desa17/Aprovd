@@ -494,15 +494,17 @@ function obtenerOrdenProductos(lista) {
 
   
   
-
-  async function cargarProductos() {  
+async function cargarProductos() {  
   const respuesta = await fetch(API_URL);  
   listaProductos = await respuesta.json();  
   listaProductos = listaProductos.slice(1);
   listaProductos = obtenerOrdenProductos(listaProductos);
-  mostrarProductosEnPantalla();  
-  }
 
+  mostrarProductosEnPantalla();
+
+  return true;   // ← AGREGA ESTO
+  }
+  
 
 
 
@@ -763,16 +765,9 @@ function actualizarPaginacion() {
 window.addEventListener('resize', actualizarPaginacion);
 
     
-async function cargarProductos() {  
-  const respuesta = await fetch(API_URL);  
-  listaProductos = await respuesta.json();  
-  listaProductos = listaProductos.slice(1);
-  listaProductos = obtenerOrdenProductos(listaProductos);
-
-  mostrarProductosEnPantalla();
-
-  return true;   // ← AGREGA ESTO
-}
+cargarProductos().then(()=>{
+  scrollProductoDesdeURL();
+});
 
 
 async function actualizarSoloEstados() {
