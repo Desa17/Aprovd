@@ -385,6 +385,14 @@ header.scrolled {
   padding:4px 8px;
   border-radius:6px;
   }
+/*---- BUSCADOR ------*/
+    .carrito-flotante{
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 999;
+}
+    
   </style>
 </head>
 <body>
@@ -396,7 +404,10 @@ header.scrolled {
     <span>S</span><span>t</span><span>o</span><span>r</span><span>e</span>
   </h1>
 </header>
-
+<!-- BUSCADOR -->
+<div class="buscador-box">
+  <input type="text" id="buscador" placeholder="Buscar producto..." oninput="buscarProductos()">
+</div>
 <div class="contenedor">
 <main>
   <div id="productos" class="productos-container"></div>
