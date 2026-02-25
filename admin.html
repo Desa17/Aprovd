@@ -2,86 +2,300 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Happy Store</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Panel Admin - Happy Store</title>
+
 <style>
-  body { font-family: Arial, sans-serif; background:#f5f5f5; padding:20px; }
-  .login, .form-container { max-width:400px; margin: 50px auto; background:#fff; padding:20px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
-  input, select { width:100%; padding:10px; margin:10px 0; border-radius:6px; border:1px solid #ccc; }
-  button { width:100%; padding:12px; border:none; border-radius:6px; background:#FF002F; color:white; cursor:pointer; font-weight:bold; }
-  button:hover { background:#cc0026; }
+
+body{
+font-family: Arial;
+background:#f5f5f5;
+margin:0;
+padding:20px;
+}
+
+/* PANEL */
+.admin{
+max-width:1200px;
+margin:auto;
+}
+
+/* CARD */
+.card{
+background:#fff;
+padding:20px;
+border-radius:12px;
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+margin-bottom:20px;
+}
+
+/* FORM */
+form{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:10px;
+}
+
+input,select,textarea{
+padding:10px;
+border-radius:8px;
+border:1px solid #ddd;
+}
+
+/* BOTONES */
+button{
+padding:10px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+background:#FF002F;
+color:white;
+font-weight:bold;
+}
+
+button:hover{
+opacity:.9;
+}
+
+/* TABLA */
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th,td{
+padding:10px;
+border-bottom:1px solid #eee;
+text-align:left;
+}
+
+tr:hover{
+background:#fafafa;
+}
+
+.acciones button{
+margin-right:5px;
+padding:6px 10px;
+font-size:12px;
+}
+
 </style>
 </head>
 <body>
 
-<div class="login" id="loginBox">
-  <h2>Admin Login</h2>
-  <input type="text" id="user" placeholder="Usuario">
-  <input type="password" id="pass" placeholder="Contraseña">
-  <button onclick="login()">Entrar</button>
+<div class="admin">
+
+<h1>Panel Admin - Happy Store</h1>
+
+<!-- FORM PRODUCTO -->
+<div class="card">
+
+<h2>Agregar / Editar Producto</h2>
+
+<form id="formProducto">
+
+<input type="hidden" id="editIndex">
+
+<input placeholder="Código" id="codigo" required>
+<input placeholder="Nombre" id="nombre" required>
+
+<textarea placeholder="Descripción" id="descripcion"></textarea>
+
+<input placeholder="Precio" id="precio" required>
+
+<select id="estrellas">
+<option value="10">★★★★★</option>
+<option value="8">★★★★</option>
+<option value="6">★★★</option>
+<option value="4">★★</option>
+<option value="2">★</option>
+</select>
+
+<select id="estado">
+<option value="disponible">Disponible</option>
+<option value="reservado">Reservado</option>
+<option value="vendido">Vendido</option>
+</select>
+
+<input placeholder="Imagen 1 URL" id="img1">
+<input placeholder="Imagen 2 URL" id="img2">
+<input placeholder="Imagen 3 URL" id="img3">
+<input placeholder="Imagen 4 URL" id="img4">
+<input placeholder="Imagen 5 URL" id="img5">
+
+<button type="submit">Guardar Producto</button>
+
+</form>
+
 </div>
 
-<div class="form-container" id="adminForm" style="display:none;">
-  <h2>Agregar Producto</h2>
-  <input type="text" id="codigo" placeholder="Código del producto">
-  <input type="text" id="nombre" placeholder="Nombre">
-  <textarea id="descripcion" placeholder="Descripción"></textarea>
-  <input type="number" id="precio" placeholder="Precio">
-  <input type="number" id="valoracion" placeholder="Valoración (0-10)" min="0" max="10">
-  <select id="estado">
-    <option value="Disponible">Disponible</option>
-    <option value="Reservado">Reservado</option>
-    <option value="Vendido">Vendido</option>
-  </select>
-  <input type="url" id="img1" placeholder="URL imagen 1">
-  <input type="url" id="img2" placeholder="URL imagen 2">
-  <input type="url" id="img3" placeholder="URL imagen 3">
-  <input type="url" id="img4" placeholder="URL imagen 4">
-  <input type="url" id="img5" placeholder="URL imagen 5">
-  <button onclick="agregarProducto()">Agregar Producto</button>
+
+<!-- LISTA -->
+<div class="card">
+
+<h2>Productos</h2>
+
+<table>
+<thead>
+<tr>
+<th>Código</th>
+<th>Nombre</th>
+<th>Precio</th>
+<th>Estado</th>
+<th>Acciones</th>
+</tr>
+</thead>
+
+<tbody id="tablaProductos"></tbody>
+
+</table>
+
 </div>
+
+</div>
+
 
 <script>
-  // Login simple
-  function login() {
-    const user = document.getElementById('user').value;
-    const pass = document.getElementById('pass').value;
-    if(user === 'admin' && pass === '1234'){ // puedes cambiar usuario y contraseña
-      document.getElementById('loginBox').style.display='none';
-      document.getElementById('adminForm').style.display='block';
-    } else {
-      alert('Usuario o contraseña incorrectos');
-    }
-  }
 
-  // Función para enviar el producto a Google Apps Script
-  function agregarProducto() {
-    const producto = {
-      codigo: document.getElementById('codigo').value,
-      nombre: document.getElementById('nombre').value,
-      descripcion: document.getElementById('descripcion').value,
-      precio: document.getElementById('precio').value,
-      valoracion: document.getElementById('valoracion').value,
-      estado: document.getElementById('estado').value,
-      img1: document.getElementById('img1').value,
-      img2: document.getElementById('img2').value,
-      img3: document.getElementById('img3').value,
-      img4: document.getElementById('img4').value,
-      img5: document.getElementById('img5').value
-    };
+const API_URL = "TU_API_AQUI"; // tu misma API
 
-    fetch('https://script.google.com/macros/s/AKfycbz5jmczBym2G_VaClZiNriAqYTpF-6qDSnRzWhRaSNHtGlDHECy03PhJT0polNG00endw/exec', {
-      method:'POST',
-      body: JSON.stringify({action:'agregar', producto: producto})
-    })
-    .then(res=>res.json())
-    .then(data=>{
-      if(data.success){
-        alert('Producto agregado correctamente');
-        document.getElementById('adminForm').reset();
-      } else alert(data.mensaje);
-    });
-  }
+let productos = [];
+
+/* ============================= */
+/* CARGAR PRODUCTOS */
+/* ============================= */
+async function cargarProductos(){
+
+const res = await fetch(API_URL);
+productos = await res.json();
+productos = productos.slice(1);
+
+renderTabla();
+
+}
+
+/* ============================= */
+/* TABLA */
+/* ============================= */
+function renderTabla(){
+
+const tabla = document.getElementById("tablaProductos");
+tabla.innerHTML="";
+
+productos.forEach((p,i)=>{
+
+tabla.innerHTML += `
+<tr>
+
+<td>${p[1]}</td>
+<td>${p[2]}</td>
+<td>S/${p[4]}</td>
+<td>${p[6]}</td>
+
+<td class="acciones">
+
+<button onclick="editarProducto(${i})">Editar</button>
+<button onclick="eliminarProducto('${p[1]}')">Eliminar</button>
+
+</td>
+
+</tr>
+`;
+
+});
+
+}
+
+/* ============================= */
+/* EDITAR */
+/* ============================= */
+function editarProducto(i){
+
+const p = productos[i];
+
+document.getElementById("editIndex").value = i;
+
+codigo.value = p[1];
+nombre.value = p[2];
+descripcion.value = p[3];
+precio.value = p[4];
+estrellas.value = p[5];
+estado.value = p[6];
+
+img1.value = p[7];
+img2.value = p[8];
+img3.value = p[9];
+img4.value = p[10];
+img5.value = p[11];
+
+window.scrollTo(0,0);
+
+}
+
+/* ============================= */
+/* GUARDAR */
+/* ============================= */
+document.getElementById("formProducto")
+.addEventListener("submit",async e=>{
+
+e.preventDefault();
+
+const data = {
+
+action:"guardar",
+
+codigo:codigo.value,
+nombre:nombre.value,
+descripcion:descripcion.value,
+precio:precio.value,
+estrellas:estrellas.value,
+estado:estado.value,
+
+imagenes:[
+img1.value,
+img2.value,
+img3.value,
+img4.value,
+img5.value
+]
+
+};
+
+await fetch(API_URL,{
+method:"POST",
+body:JSON.stringify(data)
+});
+
+alert("Guardado");
+
+location.reload();
+
+});
+
+
+/* ============================= */
+/* ELIMINAR */
+/* ============================= */
+async function eliminarProducto(codigo){
+
+if(!confirm("Eliminar producto?")) return;
+
+await fetch(API_URL,{
+method:"POST",
+body:JSON.stringify({
+action:"eliminar",
+codigo:codigo
+})
+});
+
+alert("Eliminado");
+location.reload();
+
+}
+
+
+cargarProductos();
+
 </script>
 
 </body>
