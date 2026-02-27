@@ -8,9 +8,10 @@
 <style>
 body { font-family: Arial, sans-serif; background:#f5f5f5; padding:20px; }
 .login, .form-container { max-width:400px; margin:50px auto; background:#fff; padding:20px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
-input, select, textarea { width:100%; padding:10px; margin:10px 0; border-radius:6px; border:1px solid #ccc; }
-button { width:100%; padding:12px; border:none; border-radius:6px; background:#FF002F; color:white; cursor:pointer; font-weight:bold; }
+input, select, textarea, button { width:100%; padding:10px; margin:10px 0; border-radius:6px; border:1px solid #ccc; }
+button { border:none; background:#FF002F; color:white; font-weight:bold; cursor:pointer; }
 button:hover { background:#cc0026; }
+img.preview { max-width:100%; margin-bottom:10px; border-radius:5px; display:block; }
 </style>
 
 </head>
@@ -40,33 +41,93 @@ button:hover { background:#cc0026; }
 <option value="vendido">Vendido</option>
 </select>
 
-<input type="url" id="img1" placeholder="URL imagen 1">
-<input type="url" id="img2" placeholder="URL imagen 2">
-<input type="url" id="img3" placeholder="URL imagen 3">
-<input type="url" id="img4" placeholder="URL imagen 4">
-<input type="url" id="img5" placeholder="URL imagen 5">
+<!-- Inputs de archivo + ocultos para ImageKit -->
+<label>Imagen 1</label>
+<input type="file" id="file1" accept="image/*">
+<input type="hidden" id="img1">
+<img id="preview1" class="preview">
+
+<label>Imagen 2</label>
+<input type="file" id="file2" accept="image/*">
+<input type="hidden" id="img2">
+<img id="preview2" class="preview">
+
+<label>Imagen 3</label>
+<input type="file" id="file3" accept="image/*">
+<input type="hidden" id="img3">
+<img id="preview3" class="preview">
+
+<label>Imagen 4</label>
+<input type="file" id="file4" accept="image/*">
+<input type="hidden" id="img4">
+<img id="preview4" class="preview">
+
+<label>Imagen 5</label>
+<input type="file" id="file5" accept="image/*">
+<input type="hidden" id="img5">
+<img id="preview5" class="preview">
 
 <button onclick="agregarProducto()">Agregar Producto</button>
 </div>
 
+<!-- LOGIN SIMPLE -->
 <script>
-// LOGIN SIMPLE
 function login(){
-const user = document.getElementById('user').value;
-const pass = document.getElementById('pass').value;
+    const user = document.getElementById('user').value;
+    const pass = document.getElementById('pass').value;
 
-if(user === 'admin' && pass === '1234'){
-document.getElementById('loginBox').style.display='none';
-document.getElementById('adminForm').style.display='block';
-}else{
-alert("Usuario incorrecto");
+    if(user === 'admin' && pass === '1234'){
+        document.getElementById('loginBox').style.display='none';
+        document.getElementById('adminForm').style.display='block';
+    } else{
+        alert("Usuario incorrecto");
+    }
 }
+</script>
+
+<!-- ImageKit -->
+<script src="https://unpkg.com/imagekit-javascript/dist/imagekit.min.js"></script>
+<script>
+const imagekit = new ImageKit({
+    publicKey: "public_d3ArQDMw7/fjt4Z3gsNsViVz8bc=",
+    urlEndpoint: "https://ik.imagekit.io/tu_cuenta", // reemplaza con tu URL Endpoint real
+    authenticationEndpoint: null
+});
+
+function setupFileUpload(fileId, hiddenId, previewId){
+    const fileInput = document.getElementById(fileId);
+    const hiddenInput = document.getElementById(hiddenId);
+    const preview = document.getElementById(previewId);
+
+    fileInput.addEventListener("change", function(){
+        const file = fileInput.files[0];
+        if(!file) return;
+
+        // Previsualización
+        preview.src = URL.createObjectURL(file);
+
+        // Subida
+        imagekit.upload({ file: file, fileName: file.name }, function(err, result){
+            if(err){
+                alert("Error subiendo " + fileId + ": " + err.message);
+            } else{
+                hiddenInput.value = result.url;
+                console.log(fileId + " subida:", result.url);
+            }
+        });
+    });
 }
+
+// Configuramos los 5 inputs
+setupFileUpload("file1","img1","preview1");
+setupFileUpload("file2","img2","preview2");
+setupFileUpload("file3","img3","preview3");
+setupFileUpload("file4","img4","preview4");
+setupFileUpload("file5","img5","preview5");
 </script>
 
 <!-- FIREBASE + FIRESTORE -->
 <script type="module">
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
 import { getFirestore, collection, addDoc, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
@@ -81,48 +142,48 @@ appId: "1:937721773162:web:67a5aec14f8103bc9e5e13"
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
 async function generarCodigoUnico() {
     const productosRef = collection(db, "productos");
-    const q = query(productosRef, orderBy("codigo", "desc"), limit(1)); // trae el último código
+    const q = query(productosRef, orderBy("codigo", "desc"), limit(1));
     const snapshot = await getDocs(q);
 
-    let nuevoCodigo = "HS-001"; // por defecto si no hay productos
+    let nuevoCodigo = "HS-001";
     snapshot.forEach(doc => {
-        const ultimoCodigo = doc.data().codigo; // ejemplo: "HS-007"
+        const ultimoCodigo = doc.data().codigo;
         const numero = parseInt(ultimoCodigo.split('-')[1]);
         const siguiente = numero + 1;
-        nuevoCodigo = "HS-" + String(siguiente).padStart(3, '0'); // mantiene formato HS-001
+        nuevoCodigo = "HS-" + String(siguiente).padStart(3, '0');
     });
 
     return nuevoCodigo;
 }
+
 window.agregarProducto = async function(){
+    const producto = {
+        codigo: await generarCodigoUnico(),
+        nombre: document.getElementById('nombre').value,
+        descripcion: document.getElementById('descripcion').value,
+        precio: Number(document.getElementById('precio').value),
+        condicion: Number(document.getElementById('valoracion').value),
+        estado: document.getElementById('estado').value,
+        fecha_reserva: null,
+        fotos: [
+            document.getElementById('img1').value,
+            document.getElementById('img2').value,
+            document.getElementById('img3').value,
+            document.getElementById('img4').value,
+            document.getElementById('img5').value
+        ]
+    };
 
-const producto = {
-codigo: await generarCodigoUnico(),
-nombre: document.getElementById('nombre').value,
-descripcion: document.getElementById('descripcion').value,
-precio: Number(document.getElementById('precio').value),
-condicion: Number(document.getElementById('valoracion').value),
-estado: document.getElementById('estado').value,
-fecha_reserva: null,
-fotos: [
-document.getElementById('img1').value,
-document.getElementById('img2').value,
-document.getElementById('img3').value,
-document.getElementById('img4').value,
-document.getElementById('img5').value
-]
-};
+    await addDoc(collection(db,"productos"), producto);
 
-await addDoc(collection(db,"productos"), producto);
+    alert("Producto guardado correctamente");
 
-alert("Producto guardado correctamente");
-
-document.querySelectorAll('#adminForm input, #adminForm textarea').forEach(i=>i.value="");
-
+    document.querySelectorAll('#adminForm input, #adminForm textarea').forEach(i=>i.value="");
+    document.querySelectorAll('img.preview').forEach(img=>img.src="");
 }
-
 </script>
 
 </body>
