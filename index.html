@@ -1403,5 +1403,46 @@ function compartirProducto(codigo, nombre){
 
 </script>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD8R7O8TMyzhvY1B14iBl95DFtkH2xwZiI",
+  authDomain: "happy-store-pe.firebaseapp.com",
+  projectId: "happy-store-pe",
+  storageBucket: "happy-store-pe.firebasestorage.app",
+  messagingSenderId: "937721773162",
+  appId: "1:937721773162:web:67a5aec14f8103bc9e5e13"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+async function cargarProductosFirebase() {
+  const querySnapshot = await getDocs(collection(db, "productos"));
+  listaProductos = querySnapshot.docs.map(doc => doc.data());
+  mostrarProductosEnPantalla();
+  document.getElementById("loadingSpinner").style.display = "none";
+}
+
+cargarProductosFirebase();
+</script>
 </body>
                                                               </html>
