@@ -41,29 +41,29 @@
   <button onclick="agregarProducto()">Agregar Producto</button>
 </div>
 
-<script type="module">
-  // 🔹 Firebase SDK
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js"></script>
 
-  // 🔹 Configuración de Firebase
+<script>
+  // Configuración de Firebase
   const firebaseConfig = {
-    apiKey: "AIzaSyD8R7O8TMyzhvY1B14iBl95DFtkH2xwZiI",
-    authDomain: "happy-store-pe.firebaseapp.com",
-    projectId: "happy-store-pe",
-    storageBucket: "happy-store-pe.firebasestorage.app",
-    messagingSenderId: "937721773162",
-    appId: "1:937721773162:web:67a5aec14f8103bc9e5e13"
+    apiKey: "TU_API_KEY",
+    authDomain: "TU_PROJECT_ID.firebaseapp.com",
+    projectId: "TU_PROJECT_ID",
+    storageBucket: "TU_PROJECT_ID.appspot.com",
+    messagingSenderId: "TU_SENDER_ID",
+    appId: "TU_APP_ID"
   };
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+  const app = firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
 
-  // 🔹 Login simple
-  window.login = function() {
+  // Login simple
+  function login() {
     const user = document.getElementById('user').value;
     const pass = document.getElementById('pass').value;
-    if(user === 'admin' && pass === '1234'){
+    if(user === 'admin' && pass === '1234'){ // cambiar según prefieras
       document.getElementById('loginBox').style.display='none';
       document.getElementById('adminForm').style.display='block';
     } else {
@@ -71,8 +71,8 @@
     }
   }
 
-  // 🔹 Agregar producto a Firestore
-  window.agregarProducto = async function() {
+  // Agregar producto a Firestore
+  async function agregarProducto() {
     const producto = {
       codigo: document.getElementById('codigo').value,
       nombre: document.getElementById('nombre').value,
@@ -86,16 +86,17 @@
         document.getElementById('img3').value,
         document.getElementById('img4').value,
         document.getElementById('img5').value
-      ].filter(url => url) // eliminamos campos vacíos
+      ].filter(url => url !== ""),
+      creadoEn: firebase.firestore.Timestamp.now()
     };
 
     try {
-      await addDoc(collection(db, "Productos"), producto);
-      alert('Producto agregado correctamente');
+      await db.collection("productos").add(producto);
+      alert("Producto agregado correctamente ✅");
       document.getElementById('adminForm').reset();
     } catch (error) {
-      console.error("Error agregando producto: ", error);
-      alert('Error al agregar el producto');
+      console.error("Error al agregar producto:", error);
+      alert("Error al agregar producto ❌");
     }
   }
 </script>
