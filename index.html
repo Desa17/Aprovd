@@ -1396,7 +1396,67 @@ function compartirProducto(codigo, nombre){
 
 
 
+<script type="module">
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyD8R7O8TMyzhvY1B14iBl95DFtkH2xwZiI",
+authDomain: "happy-store-pe.firebaseapp.com",
+projectId: "happy-store-pe",
+storageBucket: "happy-store-pe.firebasestorage.app",
+messagingSenderId: "937721773162",
+appId: "1:937721773162:web:67a5aec14f8103bc9e5e13"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+async function cargarProductosFirestore(){
+
+const querySnapshot = await getDocs(collection(db,"productos"));
+
+listaProductos = [];
+
+querySnapshot.forEach((doc)=>{
+
+const p = doc.data();
+
+/*
+Convertimos Firestore al mismo formato
+que usabas con Google Sheets
+*/
+
+listaProductos.push([
+"",
+p.codigo,
+p.nombre,
+p.descripcion,
+p.precio,
+p.condicion,
+p.estado,
+"",
+p.fotos?.[0] || "",
+p.fotos?.[1] || "",
+p.fotos?.[2] || "",
+p.fotos?.[3] || "",
+p.fotos?.[4] || ""
+]);
+
+});
+
+listaProductos = obtenerOrdenProductos(listaProductos);
+
+mostrarProductosEnPantalla();
+
+document.getElementById("loadingSpinner").style.display="none";
+
+}
+
+cargarProductosFirestore();
+
+</script>
 
 
 
