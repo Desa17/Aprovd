@@ -2,199 +2,157 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#FF002F">
-<meta name="description" content="Tienda de Juguetes Happy Store - productos divertidos y educativos">
-<meta name="keywords" content="juguetes, tienda, Happy Store, niños, diversión">
-<link rel="icon" href="/favicon.ico">
+<title>Happy Store</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Fredoka+One&display=swap" rel="stylesheet">
-<title>Happy Store | Juguetes divertidos</title>
-
-<!-- ================== ESTILOS ================== -->
 <style>
-/* ================== BODY ================== */
-body { font-family: 'Roboto', sans-serif; margin: 0; padding-top: 0; background-color: #f5f5f5; color: #333; }
-
-/* ================== CONTENEDOR ================== */
-.contenedor { max-width: 1200px; margin: 0 auto; padding: 23px; background-color: transparent; }
-
-/* ================== HEADER ================== */
-header { position: fixed; top: 0; width: 100%; text-align: center; z-index: 999; transition: background-color 0.3s, box-shadow 0.3s; background-color: transparent; box-shadow: none; padding:5px 0; }
-header.scrolled { background-color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-
-#titulo-happy { font-family: 'Fredoka One', cursive; font-size: 2.2rem; line-height: 1.2; word-break: break-word; }
-#titulo-happy span { display: inline-block; font-weight: bold; transition: transform 0.3s, color 0.3s; font-size: inherit; }
-#titulo-happy span:nth-child(1) { color: #FF002F; transform: rotate(-5deg); }
-#titulo-happy span:nth-child(2) { color: #FF7F50; transform: rotate(3deg); }
-#titulo-happy span:nth-child(3) { color: #FFA500; transform: rotate(-2deg); }
-#titulo-happy span:nth-child(4) { color: #00BFFF; transform: rotate(4deg); }
-#titulo-happy span:nth-child(5) { color: #32CD32; transform: rotate(-3deg); }
-#titulo-happy span:nth-child(6) { color: #FF69B4; transform: rotate(2deg); }
-#titulo-happy span:nth-child(7) { color: #FF002F; transform: rotate(-4deg); }
-#titulo-happy span:nth-child(8) { color: #FF8C00; transform: rotate(3deg); }
-#titulo-happy span:nth-child(9) { color: #1E90FF; transform: rotate(-2deg); }
-#titulo-happy span:nth-child(10){ color: #32CD32; transform: rotate(2deg); }
-#titulo-happy span:nth-child(11){ color: #FF1493; transform: rotate(-3deg); }
-#titulo-happy span:hover { transform: scale(1.3) rotate(0deg); cursor: default; }
-@media (max-width: 480px) { #titulo-happy { font-size: 1.6rem; } }
-@media (min-width: 481px) and (max-width: 768px) { #titulo-happy { font-size: 2rem; } }
-
-/* ================== PRODUCTOS ================== */
-.productos-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
-.producto { width: 300px; background: #fff; border-radius: 12px; padding: 15px; box-shadow: 0 6px 15px rgba(255,0,47,0.15); transition: transform 0.2s, box-shadow 0.2s; }
-.producto > * + * { margin-top: 10px; }
-.producto strong { font-weight: 600; }
-.producto:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(255,0,47,0.25); }
-.producto p { margin:3px 0; line-height:1.35; }
-.producto h3 { margin:6px 0 4px; line-height:1.2; }
-.producto{ animation: fadeIn .35s ease; }
-@keyframes fadeIn{ from{ opacity:0; transform: translateY(10px); } to{ opacity:1; transform: translateY(0); } }
-
-/* ================== SLIDER ================== */
-.slider { position: relative; width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 12px; cursor: grab; box-shadow: inset 0 0 5px rgba(0,0,0,0.1); }
-.slider img { width: 100%; height: 100%; object-fit: cover; display: none; transition: transform 0.3s; border-radius: 12px; }
-.slider img.active { display: block; }
-.slider-dots { text-align: center; margin-top: 8px; }
-.slider-dots span { display: inline-block; width: 12px; height: 12px; background-color: #ddd; border-radius: 50%; margin:0 4px; cursor:pointer; transition: background-color 0.2s; }
-.slider-dots span.active { background-color: #FF002F; }
-
-/* ================== ESTRELLAS ================== */
-.estrellas { display:inline-flex; gap:2px; margin-bottom:0; align-items:center; }
-.estrella { font-size:18px; position:relative; }
-.estrella.llena { color:#FF002F; }
-.estrella.vacia { color:#ddd; }
-.estrella.media { color:#ddd; }
-.estrella.media::before { content:"★"; color:#FF002F; position:absolute; width:50%; overflow:hidden; }
-
-/* ================== BOTÓN ================== */
-button { padding:12px; width:100%; border:none; border-radius:8px; background:linear-gradient(135deg, #FF002F, #cc0026); color:#fff; font-weight:500; cursor:pointer; transition:all 0.3s; box-shadow:0 4px 8px rgba(255,0,47,0.2); }
-button:hover { transform:translateY(-2px); box-shadow:0 6px 12px rgba(255,0,47,0.3); }
-@media (max-width:768px){.producto{width:90%;}}
-
-/* ================== MODAL ZOOM ================== */
-#zoomModal { display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.85); justify-content:center; align-items:center; }
-#zoomModal img { max-width:90%; max-height:90%; border-radius:12px; cursor:zoom-out; transition:transform 0.3s; }
-
-/* ================== PAGINACION ================== */
-.paginacion-container{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:nowrap;margin-top:30px;user-select:none;}
-.paginacion-container button{border:none;border-radius:50%;width:36px;height:36px;background-color:#FF002F;color:#fff;font-size:1rem;cursor:pointer;box-shadow:0 4px 8px rgba(255,0,47,0.2);display:flex;justify-content:center;align-items:center;line-height:1;transform:translateY(0);}
-.paginacion-container button:hover:not(:disabled){background-color:#cc0026;box-shadow:0 6px 12px rgba(255,0,47,0.3);}
-.paginacion-container button:disabled{background-color:#ccc;cursor:not-allowed;box-shadow:none;transform:none;}
-.paginacion-container .numero-pagina{min-width:32px;height:32px;line-height:32px;text-align:center;border-radius:6px;background-color:#fff;color:#333;font-weight:500;cursor:pointer;transition:background-color 0.3s,color 0.3s;}
-.paginacion-container .numero-pagina:hover{background-color:#FF002F;color:#fff;}
-.paginacion-container .numero-pagina.active{background-color:#FF002F;color:#fff;}
-
-/* ==== Compartir ==== */
-.fila-codigo{display:flex;justify-content:space-between;align-items:center;}
-.link-compartir{cursor:pointer;color:#FF002F;display:flex;align-items:center;gap:5px;font-size:.85rem;font-weight:600;transition:.25s;}
-.link-compartir:hover{transform: scale(1.05);text-decoration: underline;}
-.link-compartir{background:#fff5f7;padding:4px 8px;border-radius:6px;}
+body { font-family: 'Roboto', sans-serif; margin:0; background:#f5f5f5; }
+header{position:fixed;top:0;width:100%;background:#fff;text-align:center;padding:10px;box-shadow:0 2px 5px rgba(0,0,0,0.1);z-index:10;}
+#titulo-happy{font-family:'Fredoka One',cursive;font-size:2rem;}
+.contenedor{max-width:1200px;margin:100px auto 30px;padding:0 15px;}
+.productos-container{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;}
+.producto{width:300px;background:#fff;border-radius:12px;padding:15px;box-shadow:0 6px 15px rgba(255,0,47,0.15);transition:0.2s;}
+.producto:hover{transform:translateY(-5px);box-shadow:0 10px 20px rgba(255,0,47,0.25);}
+.producto img{width:100%;border-radius:12px;cursor:pointer;}
+button{padding:10px;border:none;border-radius:8px;background:#FF002F;color:#fff;font-weight:500;cursor:pointer;margin-top:5px;width:100%;}
+button:disabled{background:#ccc;cursor:not-allowed;}
+#zoomModal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);justify-content:center;align-items:center;z-index:100;}
+#zoomModal img{max-width:90%;max-height:90%;border-radius:12px;cursor:zoom-out;}
+.carrito-modal{display:none;position:fixed;top:0;right:0;width:350px;height:100%;background:#fff;box-shadow:-2px 0 10px rgba(0,0,0,0.2);z-index:1000;padding:15px;overflow-y:auto;}
+.carrito-item{display:flex;gap:10px;margin-bottom:10px;align-items:center;}
+.carrito-item img{width:50px;height:50px;object-fit:cover;border-radius:6px;}
+#carritoBtn{position:fixed;bottom:20px;right:20px;background:#FF002F;color:#fff;padding:12px;border-radius:50%;cursor:pointer;z-index:1000;}
 </style>
-
-<!-- ================== BODY ================== -->
+</head>
 <body>
-<header>
-  <h1 id="titulo-happy">
-    <span>H</span><span>a</span><span>p</span><span>p</span><span>y</span> 
-    <span> </span> 
-    <span>S</span><span>t</span><span>o</span><span>r</span><span>e</span>
-  </h1>
-</header>
-
+<header><h1 id="titulo-happy">Happy Store</h1></header>
 <div class="contenedor">
-<main>
-  <div id="loadingSpinner" style="position: relative; width: 150px; height: 150px; margin:50px auto;">
-    <img src="https://png.pngtree.com/png-clipart/20240608/original/pngtree-3d-photo-of-colorful-toys-for-children-on-transparent-background-png-image_15280851.png"
-         alt="Juguetes 3D"
-         style="width:150px;height:150px;position:absolute;top:50%;left:50%;transform: translate(-50%, -50%);object-fit:contain;z-index:1;">
-    <div style="width:150px;height:150px;border-radius:50%;position:absolute;top:0;left:0;background: conic-gradient(rgba(255,0,47,0) 0deg, rgba(255,0,47,0.05) 180deg, rgba(255,0,47,0.3) 240deg, rgba(255,0,47,0.6) 300deg, rgba(255,0,47,0.9) 330deg, rgba(255,0,47,1) 360deg);mask-image: radial-gradient(circle, transparent 68.1%, black 62%);-webkit-mask-image: radial-gradient(circle, transparent 68.1%, black 62%);animation: spin 1.1s linear infinite;z-index:2;"></div>
-    <span style="position:absolute;top:115%;left:50%;transform: translate(-50%, 0); font-family:Arial,sans-serif;font-size:18px;color:#000;white-space:nowrap;">
-      Cargando Productos<span class="dots"></span>
-    </span>
-  </div>
-
   <div id="productos" class="productos-container"></div>
-  <div id="paginacion" class="paginacion-container"></div>
-</main>
 </div>
 
-<div id="zoomModal">
-  <img id="zoomImg" alt="Imagen ampliada del producto">
+<div id="zoomModal"><img id="zoomImg" src="" alt="Zoom"></div>
+
+<div id="carritoBtn">🛒 <span id="cantidadCarrito">0</span></div>
+<div id="carritoModal" class="carrito-modal">
+  <h2>Carrito</h2>
+  <div id="carritoItems"></div>
+  <p>Total: S/<span id="totalCarrito">0</span></p>
+  <button id="checkoutCarrito">Enviar a WhatsApp</button>
+  <button id="cerrarCarrito">Cerrar</button>
 </div>
 
-<footer>
-  <p>© 2026 Happy Store | Todos los derechos reservados</p>
-</footer>
-
-<!-- ================== FIREBASE SDK ================== -->
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-
 <script>
-  // ================== CONFIG FIREBASE ==================
-  const firebaseConfig = {
-    apiKey: "TU_API_KEY",
-    authDomain: "TU_AUTH_DOMAIN",
-    databaseURL: "TU_DATABASE_URL",
-    projectId: "TU_PROJECT_ID",
-    storageBucket: "TU_STORAGE_BUCKET",
-    messagingSenderId: "TU_SENDER_ID",
-    appId: "TU_APP_ID"
-  };
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
+const firebaseConfig = {
+  apiKey: "TU_API_KEY",
+  authDomain: "TU_AUTH_DOMAIN",
+  databaseURL: "TU_DATABASE_URL",
+  projectId: "TU_PROJECT_ID",
+  storageBucket: "TU_STORAGE_BUCKET",
+  messagingSenderId: "TU_SENDER_ID",
+  appId: "TU_APP_ID"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
-  let listaProductos = [];
-  let paginaActual = 1;
-  const productosPorPagina = 6;
-  let totalPaginas = 1;
-  let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+let listaProductos=[], carrito=[];
 
-  // ================== FUNCIONES ==================
-  function randomConSemilla(seed) { var x = Math.sin(seed) * 10000; return x - Math.floor(x); }
-  function shuffleConSemilla(array, semilla) { let copia = [...array]; for(let i=copia.length-1;i>0;i--){const j=Math.floor(randomConSemilla(semilla+i)*(i+1));[copia[i],copia[j]]=[copia[j],copia[i]];}return copia;}
-  function getUserId() { let userId=localStorage.getItem("userId"); if(!userId){userId=Math.floor(Math.random()*1e9);localStorage.setItem("userId",userId);} return parseInt(userId); }
-  function getDailySeed(){ const today=new Date(); const dia=today.getFullYear()*10000+(today.getMonth()+1)*100+today.getDate(); const userId=getUserId(); return dia+userId; }
-  function obtenerOrdenProductos(lista){ const semilla=getDailySeed(); const key=`ordenProductos-${semilla}`; let ordenGuardado=localStorage.getItem(key); let indices; if(ordenGuardado){ indices=JSON.parse(ordenGuardado); const nuevos=lista.map((_,i)=>i).filter(i=>!indices.includes(i)); if(nuevos.length>0){ indices=[...indices,...shuffleConSemilla(nuevos,semilla)];} indices=indices.filter(i=>i<lista.length); localStorage.setItem(key,JSON.stringify(indices)); }else{ indices=shuffleConSemilla(lista.map((_,i)=>i),semilla); localStorage.setItem(key,JSON.stringify(indices)); } return indices.map(i=>lista[i]); }
+// ================== CARGAR PRODUCTOS ==================
+async function cargarProductos(){
+  const snapshot = await db.ref("productos").once("value");
+  const data = snapshot.val();
+  listaProductos = Object.keys(data || {}).map(k => {
+    return {codigo:k, ...data[k]};
+  });
+  mostrarProductos();
+}
 
-  // ================== CARGAR PRODUCTOS ==================
-  async function cargarProductos(){
-    const snapshot = await db.ref("productos").once("value");
-    const data = snapshot.val();
-    listaProductos = Object.keys(data || {}).map(k => [k, data[k].nombre, data[k].descripcion, data[k].precio, data[k].estado, data[k].imagenes]);
-    listaProductos = obtenerOrdenProductos(listaProductos);
-    mostrarProductosEnPantalla();
-    document.getElementById("loadingSpinner").style.display="none";
-  }
+function mostrarProductos(){
+  const contenedor=document.getElementById("productos");
+  contenedor.innerHTML="";
+  listaProductos.forEach(prod=>{
+    let div=document.createElement("div");
+    div.className="producto";
+    let estadoText="";
+    let disabled=false;
+    if(prod.estado==="reservado"){estadoText="Reservado";disabled=true;}
+    else if(prod.estado==="vendido"){estadoText="Vendido";disabled=true;}
+    else{estadoText="Comprar";disabled=false;}
+    div.innerHTML=`
+      <img src="${prod.imagenes[0]}" alt="${prod.nombre}" onclick="zoomImagen('${prod.imagenes[0]}')">
+      <h3>${prod.nombre}</h3>
+      <p>${prod.descripcion}</p>
+      <p>S/${prod.precio}</p>
+      <button ${disabled?'disabled':''} onclick="agregarCarrito('${prod.codigo}')">${estadoText}</button>
+    `;
+    contenedor.appendChild(div);
+  });
+}
 
-  // ================== FUNCIONES DEL CARRITO ==================
-  function actualizarCarritoStorage(){ localStorage.setItem('carrito', JSON.stringify(carrito)); }
-  function actualizarCantidadCarrito(){ const cantidad=carrito.reduce((acc,item)=>acc+item.cantidad,0); document.getElementById('cantidadCarrito').textContent=cantidad; }
-  function agregarAlCarrito(producto){ const index=carrito.findIndex(item=>item.codigo===producto.codigo); if(index!==-1){ carrito[index].cantidad+=1; } else{ carrito.push({...producto,cantidad:1}); } actualizarCarritoStorage(); actualizarCantidadCarrito(); mostrarCarrito(); }
-  function mostrarCarrito(){ const contenedor=document.getElementById('carritoItems'); contenedor.innerHTML=''; let total=0; carrito.forEach(item=>{ total+=item.precio*item.cantidad; contenedor.innerHTML+=`<div class="carrito-item"><img src="${item.imagen}" alt="${item.nombre}"><div class="carrito-item-info"><h4>${item.nombre}</h4><p>S/${item.precio} c/u</p></div><div class="carrito-item-controls"><input type="number" value="${item.cantidad}" min="1" onchange="cambiarCantidad('${item.codigo}',this.value)"><button onclick="eliminarDelCarrito('${item.codigo}')">X</button></div></div>` }); document.getElementById('totalCarrito').textContent=total.toFixed(2); }
-  function cambiarCantidad(codigo,cantidad){ const index=carrito.findIndex(item=>item.codigo===codigo); if(index!==-1){ carrito[index].cantidad=parseInt(cantidad); if(carrito[index].cantidad<1) carrito[index].cantidad=1; actualizarCarritoStorage(); actualizarCantidadCarrito(); mostrarCarrito(); } }
-  async function eliminarDelCarrito(codigo){ await db.ref('productos/'+codigo+'/estado').set('disponible'); carrito=carrito.filter(item=>item.codigo!==codigo); actualizarCarritoStorage(); actualizarCantidadCarrito(); mostrarCarrito(); }
+// ================== ZOOM IMAGEN ==================
+function zoomImagen(url){
+  const modal=document.getElementById("zoomModal");
+  const img=document.getElementById("zoomImg");
+  img.src=url;
+  modal.style.display="flex";
+}
+document.getElementById("zoomModal").addEventListener("click",()=>{document.getElementById("zoomModal").style.display="none";});
 
-</script>
+// ================== CARRITO ==================
+function actualizarCarrito(){
+  document.getElementById("carritoItems").innerHTML="";
+  let total=0;
+  carrito.forEach(item=>{
+    total+=item.precio*item.cantidad;
+    let div=document.createElement("div");
+    div.className="carrito-item";
+    div.innerHTML=`
+      <img src="${item.imagen}" alt="${item.nombre}">
+      <div>${item.nombre}<br>S/${item.precio} x <input type="number" value="${item.cantidad}" min="1" style="width:40px" onchange="cambiarCantidad('${item.codigo}',this.value)"></div>
+      <button onclick="quitarCarrito('${item.codigo}')">X</button>
+    `;
+    document.getElementById("carritoItems").appendChild(div);
+  });
+  document.getElementById("totalCarrito").textContent=total.toFixed(2);
+  document.getElementById("cantidadCarrito").textContent=carrito.reduce((a,b)=>a+b.cantidad,0);
+}
 
-<!-- ================== BOTÓN CARRITO ================== -->
-<div id="carritoBtn">🛒 <span id="cantidadCarrito">0</span></div>
-<div id="carritoModal">
-  <div class="carrito-content">
-    <div class="carrito-header">
-      <h2>Tu Carrito</h2>
-      <span id="cerrarCarrito">&times;</span>
-    </div>
-    <div id="carritoItems" class="carrito-items"></div>
-    <div class="carrito-footer">
-      <p>Total: S/<span id="totalCarrito">0</span></p>
-      <button id="checkoutCarrito">Enviar a WhatsApp</button>
-    </div>
-  </div>
-</div>
-<script>
-document.addEventListener('DOMContentLoaded',()=>{ cargarProductos(); actualizarCantidadCarrito(); });
+function agregarCarrito(codigo){
+  const prod=listaProductos.find(p=>p.codigo===codigo);
+  if(!prod) return;
+  // cambiar estado en Firebase a reservado
+  db.ref('productos/'+codigo+'/estado').set('reservado');
+  prod.estado="reservado";
+  let item=carrito.find(i=>i.codigo===codigo);
+  if(item){item.cantidad++;}
+  else{carrito.push({codigo:prod.codigo,nombre:prod.nombre,precio:prod.precio,imagen:prod.imagenes[0],cantidad:1});}
+  actualizarCarrito();
+  mostrarProductos();
+}
+function cambiarCantidad(codigo,val){
+  let item=carrito.find(i=>i.codigo===codigo);
+  if(item){item.cantidad=parseInt(val); if(item.cantidad<1) item.cantidad=1; actualizarCarrito();}
+}
+function quitarCarrito(codigo){
+  carrito=carrito.filter(i=>i.codigo!==codigo);
+  db.ref('productos/'+codigo+'/estado').set('disponible');
+  const prod=listaProductos.find(p=>p.codigo===codigo); if(prod) prod.estado="disponible";
+  actualizarCarrito(); mostrarProductos();
+}
+
+document.getElementById("carritoBtn").addEventListener("click",()=>{document.getElementById("carritoModal").style.display="block";});
+document.getElementById("cerrarCarrito").addEventListener("click",()=>{document.getElementById("carritoModal").style.display="none";});
+
+document.getElementById("checkoutCarrito").addEventListener("click",()=>{
+  if(carrito.length===0) return alert("El carrito está vacío");
+  let mensaje="Hola! Quiero comprar:\n";
+  carrito.forEach(i=>{mensaje+=`${i.nombre} x${i.cantidad} - S/${i.precio*i.cantidad}\n`;});
+  window.open(`https://wa.me/tu-numero?text=${encodeURIComponent(mensaje)}`,"_blank");
+});
+
+cargarProductos();
 </script>
 </body>
 </html>
