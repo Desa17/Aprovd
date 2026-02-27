@@ -81,11 +81,25 @@ appId: "1:937721773162:web:67a5aec14f8103bc9e5e13"
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+async function generarCodigoUnico() {
+    const productosRef = collection(db, "productos");
+    const q = query(productosRef, orderBy("codigo", "desc"), limit(1)); // trae el último código
+    const snapshot = await getDocs(q);
 
+    let nuevoCodigo = "HS-001"; // por defecto si no hay productos
+    snapshot.forEach(doc => {
+        const ultimoCodigo = doc.data().codigo; // ejemplo: "HS-007"
+        const numero = parseInt(ultimoCodigo.split('-')[1]);
+        const siguiente = numero + 1;
+        nuevoCodigo = "HS-" + String(siguiente).padStart(3, '0'); // mantiene formato HS-001
+    });
+
+    return nuevoCodigo;
+}
 window.agregarProducto = async function(){
 
 const producto = {
-codigo: document.getElementById('codigo').value,
+codigo: await generarCodigoUnico(),
 nombre: document.getElementById('nombre').value,
 descripcion: document.getElementById('descripcion').value,
 precio: Number(document.getElementById('precio').value),
