@@ -90,8 +90,8 @@ function login(){
 <script>
 const imagekit = new ImageKit({
     publicKey: "public_d3ArQDMw7/fjt4Z3gsNsViVz8bc=",
-    urlEndpoint: "https://ik.imagekit.io/tu_cuenta", // reemplaza con tu URL Endpoint real
-    authenticationEndpoint: null
+    urlEndpoint: "https://ik.imagekit.io/tu_cuenta",
+    authenticationEndpoint: "https://imagekit-token.vercel.app/" // tu endpoint Vercel
 });
 
 function setupFileUpload(fileId, hiddenId, previewId){
